@@ -4,12 +4,24 @@ import "./input.css";
 import "./index.css";
 
 import Home from "./view/home/Home";
+import Client from "./view/ClientView/Client";
+import Qrcode from "./view/QrCode/Qrcode";
+import Payments from "./view/Payments/Payments";
+import Profits from "./view/Profits/Profits";
+
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route index element={<Home />} />
+        <Route path="/Client" element={<Client/>}/>
+        <Route path="/QrCode" element={<Qrcode/>}/>
+        <Route path="/payments" element={<Payments/>}/>
+        <Route path="/profits" element={<Profits/>}/>
+ 
+
+   
       </Routes>
     </BrowserRouter>
   );

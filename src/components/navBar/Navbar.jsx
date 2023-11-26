@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Icons from '../../assets/icons/Icons'
 import PopUp from '../popUp/PopUp'
-
+import { Link } from 'react-router-dom'
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -13,14 +13,14 @@ const Navbar = () => {
     <>
     <div className='bg-wblack text-white py-[1rem] px-[5rem] flex justify-between items-center fixed w-screen'>
       <div>
-        <h1 className='text-[2rem] cursor-pointer'>LOGO</h1>
+        <h1 className='text-[2rem] cursor-pointer'><Link to="/">LOGO</Link></h1>
       </div>
       <div>
           <ul className='flex gap-[3rem]'>
-            <li className='hover:bg-red  rounded-[4rem] px-[1rem] py-[0.5rem]'><a href='/'>Client</a></li>
-            <li className='hover:bg-red rounded-[4rem] px-[1rem] py-[0.5rem]'><a href='/'>Payments</a></li>
-            <li className='hover:bg-red rounded-[4rem] px-[1rem] py-[0.5rem]'><a href='/'>Profits</a></li>
-            <li className='hover:bg-red rounded-[4rem] px-[1rem] py-[0.5rem]'><a href='/'>QrScanner</a></li>
+            <li className='hover:bg-red  rounded-[4rem] px-[1rem] py-[0.5rem]'><Link to='/Client'>Client</Link></li>
+            <li className='hover:bg-red rounded-[4rem] px-[1rem] py-[0.5rem]'><Link to='/Payments'>Payments</Link></li>
+            <li className='hover:bg-red rounded-[4rem] px-[1rem] py-[0.5rem]'><Link to='/profits'>Profits</Link></li>
+            <li className='hover:bg-red rounded-[4rem] px-[1rem] py-[0.5rem]'><Link to='/QrCode'>QrScanner</Link></li>
           </ul>
       </div>
       <div>
