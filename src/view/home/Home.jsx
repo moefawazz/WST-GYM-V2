@@ -9,9 +9,9 @@ import Table from "../../components/table/Table";
 const Home = () => {
   const data = [
     { client: 'Client A', type: 'Zumba', timeLeft: '23 days left' },
-    { client: 'Client B', type: 'Gym', timeLeft: '15 days left' },
+    { client: 'Client B', type: 'Gym', timeLeft: '9 days left' },
     { client: 'Client C', type: 'Zumba', timeLeft: '30 days left' },
-    { client: 'Client D', type: 'Gym', timeLeft: '10 days left' },
+    { client: 'Client D', type: 'Gym', timeLeft: '0 days left' },
    
   ];
   return (

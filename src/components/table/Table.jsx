@@ -3,14 +3,14 @@ import React from 'react';
 const Table = ({ data }) => {
   const getCircleColor = (timeLeft) => {
     let circleColor = '';
-    const daysLeft = parseInt(timeLeft.split(' ')[0]); // Extract days as integer
+    const daysLeft = parseInt(timeLeft.split(' ')[0]);
 
     if (daysLeft > 10) {
-      circleColor = 'bg-green-500'; // Green circle for more than 10 days
+      circleColor = 'bg-green-500';
     } else if (daysLeft <= 10 && daysLeft > 0) {
-      circleColor = 'bg-yellow-500'; // Yellow circle for 10 days or less
+      circleColor = 'bg-yellow-500';
     } else {
-      circleColor = 'bg-red-500'; // Red circle for 0 days or negative
+      circleColor = 'bg-red';
     }
 
     return circleColor;
@@ -32,9 +32,9 @@ const Table = ({ data }) => {
               <td className="py-2 px-4 border-collapse border border-red rounded-lg overflow-hidden">{item.client}</td>
               <td className="py-2 px-4 border-collapse border border-red rounded-lg overflow-hidden">{item.type}</td>
               <td className="py-2 px-4 border-collapse border border-red rounded-lg overflow-hidden">
-                <div className="flex items-center justify-center">
+                <div className="flex items-center">
                   <span className={`w-4 h-4 rounded-full inline-block mr-2 ${getCircleColor(item.timeLeft)}`}></span>
-                  {item.timeLeft}
+                  <span className="flex items-center">{item.timeLeft}</span>
                 </div>
               </td>
             </tr>
