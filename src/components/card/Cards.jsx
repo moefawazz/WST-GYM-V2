@@ -5,7 +5,7 @@ const Cards = ({ text, icon, count }) => {
     <div className='w-[30rem] p-[3rem] border-[0.2rem] border-red rounded-[1rem]'>
         <div className='flex items-center justify-between text-[1.5rem] font-semibold'>
             <div>{text}</div>
-            {icon}
+            <div className='text-[2.5rem]'>{icon}</div>
         </div>
         <div className='mt-5 text-[1.25rem]'>
             {count}

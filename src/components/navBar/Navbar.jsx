@@ -1,8 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Icons from '../../assets/icons/Icons'
+import PopUp from '../popUp/PopUp'
 
 const Navbar = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const closeDeleteModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
+    <>
     <div className='bg-wblack text-white py-[1rem] px-[5rem] flex justify-between items-center fixed w-screen'>
       <div>
         <h1 className='text-[2rem] cursor-pointer'>LOGO</h1>
@@ -16,9 +24,20 @@ const Navbar = () => {
           </ul>
       </div>
       <div>
-        <Icons.Bell className='text-red w-[2rem] h-[1.25rem] cursor-pointer'/>
+        <Icons.Bell className='text-red w-[2rem] h-[1.25rem] cursor-pointer' onClick={setIsModalOpen}/>
       </div>
     </div>
+
+    <PopUp
+      isOpen={isModalOpen}
+      title='Delete Client'
+      text='Are you sure you want to delete?'
+      confirmText='Delete'
+      bgColor='bg-red'
+      onCancel={closeDeleteModal}
+      onConfirm={closeDeleteModal}
+    />
+    </>
   )
 }
 

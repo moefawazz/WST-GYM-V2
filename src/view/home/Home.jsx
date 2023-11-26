@@ -3,6 +3,7 @@ import Navbar from "../../components/navBar/Navbar";
 import Banner from "../../components/banner/Banner";
 import Cards from "../../components/card/Cards";
 import Icons from "../../assets/icons/Icons";
+import Footer from "../../components/footer/Footer";
 
 const Home = () => {
   return (
@@ -10,7 +11,7 @@ const Home = () => {
       <Navbar />
       <Banner />
       <div className="px-[5rem] py-[2.5rem] flex flex-col gap-[3rem] justify-center items-center flex-wrap">
-        <h1 className="text-[3rem]">Payment Overview</h1>
+        <h1 className="text-[3rem]">Performance Overview</h1>
         <div className="flex flex-1 gap-[2rem] flex-wrap">
           <Cards text="Clients" count="25" icon={<Icons.Users/>}/>
           <Cards text="Payments" count="250" icon={<Icons.Credit/>}/>
@@ -20,6 +21,7 @@ const Home = () => {
           <Cards text="Today Clients" count="10" icon={<Icons.Today/>}/>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
