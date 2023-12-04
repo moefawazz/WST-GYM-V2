@@ -1,0 +1,9 @@
+import React from 'react'
+
+const Button = ({title, onClick}) => {
+  return (
+    <button className='rounded-[3.125rem] bg-red px-[1.5rem] py-[0.43rem] text-white hover:bg-red2' onClick={onClick}>{title}</button>
+  )
+}
+
+export default Button

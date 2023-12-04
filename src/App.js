@@ -8,11 +8,13 @@ import Client from "./view/ClientView/Client";
 import Qrcode from "./view/QrCode/Qrcode";
 import Payments from "./view/Payments/Payments";
 import Profits from "./view/Profits/Profits";
+import Navbar from "./components/navBar/Navbar";
 
 
 function App() {
   return (
     <BrowserRouter>
+    <Navbar />
       <Routes>
         <Route index element={<Home />} />
         <Route path="/Client" element={<Client/>}/>

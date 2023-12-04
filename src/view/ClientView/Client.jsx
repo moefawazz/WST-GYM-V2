@@ -1,13 +1,12 @@
 import React from 'react'
+import HeaderPage from '../../components/headerPage/HeaderPage';
+import InputsForm from '../../components/inputsForm/InputsForm';
 
-import Navbar from "../../components/navBar/Navbar";
-import Banner from "../../components/banner/Banner";
 const Client = () => {
   return (
     <>
-    <Navbar />
-    <Banner />
-    <div>Clients</div>
+    <HeaderPage title="Add Clients"/>
+    <InputsForm/>
     </>
   )
 }

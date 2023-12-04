@@ -1,13 +1,10 @@
 import React from 'react'
+import HeaderPage from '../../components/headerPage/HeaderPage';
 
-import Navbar from "../../components/navBar/Navbar";
-import Banner from "../../components/banner/Banner";
 const Profits = () => {
   return (
     <>
-    <Navbar />
-    <Banner />
-    <div>Profits</div>
+    <HeaderPage title="Profits"/>
     </>
   )
 }

@@ -1,13 +1,10 @@
 import React from 'react'
+import HeaderPage from '../../components/headerPage/HeaderPage';
 
-import Navbar from "../../components/navBar/Navbar";
-import Banner from "../../components/banner/Banner";
 const Qrcode = () => {
   return (
     <>
-    <Navbar />
-    <Banner />
-    <div>qrcode</div>
+    <HeaderPage title="Qrcode"/>
     </>
   )
 }

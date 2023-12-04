@@ -1,13 +1,10 @@
 import React from 'react'
+import HeaderPage from '../../components/headerPage/HeaderPage';
 
-import Navbar from "../../components/navBar/Navbar";
-import Banner from "../../components/banner/Banner";
 const Payments = () => {
   return (
     <>
-    <Navbar />
-    <Banner />
-    <div>Payments</div>
+    <HeaderPage title="Payments"/>
     </>
   )
 }
