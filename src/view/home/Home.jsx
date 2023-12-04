@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../../components/navBar/Navbar";
 import Banner from "../../components/banner/Banner";
 import Footer from "../../components/footer/Footer";
 import StatCard from "../../components/statCards/StatCard";
