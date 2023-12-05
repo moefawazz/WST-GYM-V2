@@ -23,7 +23,7 @@ const TableAddClient = ({data}) => {
             <th className="py-2 px-4  border border-red">Clients</th>
             <th className="py-2 px-4  border border-red">Type (Zumba or Gym)</th>
             <th className="py-2 px-4  border border-red">Phone Number</th>
-            <th className="py-2 px-4  border border-red">Time left</th>
+            {/* <th className="py-2 px-4  border border-red">Time left</th> */}
           </tr>
         </thead>
         <tbody>
@@ -32,12 +32,12 @@ const TableAddClient = ({data}) => {
               <td className="py-2 px-4  border border-red">{item.firstName} {item.lastName}</td>
               <td className="py-2 px-4  border border-red">{item.activity}</td>
               <td className="py-2 px-4  border border-red">{item.phoneNumber}</td>
-              <td className="py-2 px-4  border border-red">
+              {/* <td className="py-2 px-4  border border-red">
                 <div className="flex items-center">
                   <span className={`w-4 h-4 rounded-full inline-block mr-2 ${getCircleColor(item.timeLeft)}`}></span>
                   <span className="flex items-center">{item.timeLeft}</span>
                 </div>
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>
