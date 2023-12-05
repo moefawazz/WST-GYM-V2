@@ -24,7 +24,7 @@ const Navbar = () => {
         <div>
           <ul className='flex gap-[3rem]'>
             <li className={`hover:bg-red2 rounded-[4rem] px-[1rem] py-[0.5rem] ${activeLink === '/Client' && 'bg-red'}`}>
-              <Link to='/Client' onClick={() => handleLinkClick('/Client')}>Client</Link>
+              <Link to='/Client' onClick={() => handleLinkClick('/Client')}>Clients</Link>
             </li>
             <li className={`hover:bg-red2 rounded-[4rem] px-[1rem] py-[0.5rem] ${activeLink === '/Payments' && 'bg-red'}`}>
               <Link to='/Payments' onClick={() => handleLinkClick('/Payments')}>Payments</Link>
