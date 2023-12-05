@@ -9,14 +9,18 @@ import Qrcode from "./view/QrCode/Qrcode";
 import Payments from "./view/Payments/Payments";
 import Profits from "./view/Profits/Profits";
 import Navbar from "./components/navBar/Navbar";
-
-
+import Signin from "./view/Signup-Signin/Signin";
+import Signup from "./view/Signup-Signin/Signup";
+import { AuthContextProvider } from "./context/AuthContext";
 function App() {
   return (
     <BrowserRouter>
     <Navbar />
+    <AuthContextProvider>
       <Routes>
         <Route index element={<Home />} />
+      <Route path='/signin' element={<Signin />} />
+      <Route path='/signup' element={<Signup/>} />
         <Route path="/Client" element={<Client/>}/>
         <Route path="/QrCode" element={<Qrcode/>}/>
         <Route path="/payments" element={<Payments/>}/>
@@ -25,7 +29,9 @@ function App() {
 
    
       </Routes>
+      </AuthContextProvider>
     </BrowserRouter>
+    
   );
 }
 
