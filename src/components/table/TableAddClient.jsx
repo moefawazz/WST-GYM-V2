@@ -60,8 +60,8 @@ const TableAddClient = () => {
   };
 
   return (
-    <div className=" max-w-screen-lg mx-[1.5rem] flex justify-center items-center">
-      <table className="w-full rounded-[1rem] ">
+    <div className="w-full max-w-screen-lg mx-auto">
+      <table className="w-full rounded-[1rem] overflow-hidden">
         <thead>
           <tr className="text-black border border-red">
             <th className="py-2 px-4 border border-red">Clients</th>
@@ -78,8 +78,8 @@ const TableAddClient = () => {
               <td className="py-2 px-4 border border-red">{item.PhoneNumber}</td>
               <td className="py-2 px-4 border border-red">
                 <div className="flex items-center">
-                  {/* <span className={`w-4 h-4 rounded-full inline-block mr-2 ${getCircleColor(item.timeLeft)}`}></span>
-                  <span className="flex items-center">{item.timeLeft}</span> */}
+                  <span className={`w-4 h-4 rounded-full inline-block mr-2 ${getCircleColor(calculateTimeLeft(item.EndDate, item.StartDate))}`}></span>
+                  <span className="flex items-center">{calculateTimeLeft(item.EndDate, item.StartDate)}</span>
                 </div>
               </td>
             </tr>
