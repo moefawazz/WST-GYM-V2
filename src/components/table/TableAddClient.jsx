@@ -16,10 +16,10 @@ const TableAddClient = ({data}) => {
         return circleColor;
       };
   return (
-    <div className="w-full max-w-screen-lg mx-[1.5rem]">
-      <table className="w-full rounded-[1rem] overflow-hidden">
+    <div className=" max-w-screen-lg mx-[1.5rem] flex justify-center items-center">
+      <table className="w-full rounded-[1rem] ">
         <thead>
-          <tr className="text-black  border border-red">
+          <tr className="text-black  border border-red text-[0.7rem]">
             <th className="py-2 px-4  border border-red">Clients</th>
             <th className="py-2 px-4  border border-red">Type (Zumba or Gym)</th>
             <th className="py-2 px-4  border border-red">Phone Number</th>
@@ -28,14 +28,14 @@ const TableAddClient = ({data}) => {
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr key={index} className={index % 2 === 0 ? 'bg-white text-black' : 'bg-gray-200'}>
+            <tr key={index} className={index % 2 === 0 ? 'bg-white text-black text-[0.7rem]' : 'bg-gray-200 text-[0.7rem]'} >
               <td className="py-2 px-4  border border-red">{item.firstName} {item.lastName}</td>
               <td className="py-2 px-4  border border-red">{item.activity}</td>
               <td className="py-2 px-4  border border-red">{item.phoneNumber}</td>
               <td className="py-2 px-4  border border-red">
                 <div className="flex items-center">
-                  <span className={`w-4 h-4 rounded-full inline-block mr-2 ${getCircleColor(item.timeLeft)}`}></span>
-                  <span className="flex items-center">{item.timeLeft}</span>
+                  {/* <span className={`w-4 h-4 rounded-full inline-block mr-2 ${getCircleColor(item.timeLeft)}`}></span>
+                  <span className="flex items-center">{item.timeLeft}</span> */}
                 </div>
               </td>
             </tr>

@@ -70,15 +70,15 @@ const InputsForm = () => {
           <SelectInput onChange={(value) => handleInputChange('activity', value)} value={formData.activity}/>
         </div>
         
-        <div className='flex gap-[0.4rem]'>
-        <div className='flex flex-col'>
+        <div className='flex gap-[0.4rem] w-full'>
+        <div className='flex-1 flex-col'>
           <label>From :</label>
-          <Input type="date" placeholder="From" value={formData.fromDate} onChange={(e) => handleInputChange('fromDate', e.target.value)}/>
+          <Input type="date" placeholder="From" value={formData.fromDate} onChange={(e) => handleInputChange('fromDate', e.target.value)} width="w-full"/>
         </div>
         
-        <div className='flex flex-col'>
+        <div className='flex-1 flex-col'>
           <label>To :</label>
-          <Input type="date" placeholder="To" value={formData.toDate} onChange={(e) => handleInputChange('toDate', e.target.value)}/>
+          <Input type="date" placeholder="To" value={formData.toDate} onChange={(e) => handleInputChange('toDate', e.target.value)} width="w-full"/>
         </div>
         </div>
       </div>
