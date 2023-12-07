@@ -12,6 +12,7 @@ import Navbar from "./components/navBar/Navbar";
 import Signin from "./view/Signup-Signin/Signin";
 import Signup from "./view/Signup-Signin/Signup";
 import { AuthContextProvider } from "./context/AuthContext";
+import Qrcode1 from "./view/QrCode/Qrcode1";
 function App() {
   return (
     <BrowserRouter>
@@ -19,10 +20,11 @@ function App() {
     <AuthContextProvider>
       <Routes>
         <Route index element={<Home />} />
-      <Route path='/signin' element={<Signin />} />
-      <Route path='/signup' element={<Signup/>} />
+      <Route path='/Signin' element={<Signin />} />
+      <Route path='/Signup' element={<Signup/>} />
         <Route path="/Client" element={<Client/>}/>
         <Route path="/QrCode" element={<Qrcode/>}/>
+        <Route path="/QrCode1" element={<Qrcode1/>}/>
         <Route path="/payments" element={<Payments/>}/>
         <Route path="/profits" element={<Profits/>}/>
  
