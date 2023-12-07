@@ -49,7 +49,7 @@ const InputsForm = () => {
 
   return (
     <div className="container mx-auto mt-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mx-[1.5rem]">
         <div className='flex flex-col'>
           <label>First Name :</label>
           <Input type="text" placeholder="Enter First Name" onChange={(e) => handleInputChange('firstName', e.target.value)} value={formData.firstName}/>
@@ -70,6 +70,7 @@ const InputsForm = () => {
           <SelectInput onChange={(value) => handleInputChange('activity', value)} value={formData.activity}/>
         </div>
         
+        <div className='flex gap-[0.4rem]'>
         <div className='flex flex-col'>
           <label>From :</label>
           <Input type="date" placeholder="From" value={formData.fromDate} onChange={(e) => handleInputChange('fromDate', e.target.value)}/>
@@ -78,6 +79,7 @@ const InputsForm = () => {
         <div className='flex flex-col'>
           <label>To :</label>
           <Input type="date" placeholder="To" value={formData.toDate} onChange={(e) => handleInputChange('toDate', e.target.value)}/>
+        </div>
         </div>
       </div>
       <div className='flex justify-center items-center mt-[2.5rem]'>

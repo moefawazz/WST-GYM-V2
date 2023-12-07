@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-wblack text-white py-[1rem] px-[5rem] flex justify-between items-center">
+    <div className="bg-wblack text-white py-[1rem] px-[1.5rem] flex justify-between items-center">
       <div>
         <h1 className="text-[2rem] cursor-pointer">LOGO</h1>
       </div>

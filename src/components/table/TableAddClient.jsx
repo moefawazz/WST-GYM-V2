@@ -16,7 +16,7 @@ const TableAddClient = ({data}) => {
         return circleColor;
       };
   return (
-    <div className="w-full max-w-screen-lg mx-auto">
+    <div className="w-full max-w-screen-lg mx-[1.5rem]">
       <table className="w-full rounded-[1rem] overflow-hidden">
         <thead>
           <tr className="text-black  border border-red">
