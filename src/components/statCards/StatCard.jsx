@@ -6,7 +6,7 @@ const StatCard = () => {
 
   return (
     <div className="px-[1.5rem] py-[2.5rem] flex flex-col gap-[2rem] justify-center items-center flex-wrap">
-    <h1 className="text-[1.5rem] font-semibold">Performance Overview</h1>
+    <h1 className="text-[1.7rem]">Performance Overview</h1>
     <div className="flex flex-1 gap-[2rem] flex-wrap">
       <Cards text="Clients" count="25" icon={<Icons.Users/>}/>
       <Cards text="Payments" count="250" icon={<Icons.Credit/>}/>

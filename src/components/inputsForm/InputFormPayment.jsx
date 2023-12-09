@@ -25,7 +25,7 @@ const InputFormPayment = () => {
       <ToastContainer />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mx-[1.5rem]">
         <div className="flex flex-col">
-          <label>item Name :</label>
+          <label>Item Name :</label>
           <Input
             type="text"
             placeholder="Enter Item Name"

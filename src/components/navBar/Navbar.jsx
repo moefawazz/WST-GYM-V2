@@ -24,7 +24,7 @@ const Navbar = () => {
     <>
       <header className='bg-wblack text-white py-[1rem] px-[1.5rem] flex justify-between fixed items-center w-screen'>
         <div>
-          <h1 className='text-[1.5rem] cursor-pointer'><Link to="/" onClick={() => handleLinkClick('/')}>LOGO</Link></h1>
+          <h1 className='text-[1.5rem] cursor-pointer'><Link to="/" onClick={() => handleLinkClick('/')}>WST<span className="text-red font-semibold">GYM</span></Link></h1>
         </div>
         <nav className="flex gap-[3rem]" ref={navRef}>
             <Link to='/Client' className={`hover:bg-red2 rounded-[4rem] px-[1rem] py-[0.5rem] ${activeLink === '/Client' && 'bg-red'}`} onClick={() => {handleLinkClick('/Client'); showNavbar()}}>
@@ -43,12 +43,12 @@ const Navbar = () => {
             <Icons.Close className="text-red text-[2.5rem]"/>
           </button>
         </nav>
-        <div>
-          <Icons.Bell className='text-red w-[2rem] h-[1.25rem] cursor-pointer' onClick={() => setIsModalOpen(true)} />
-        </div>
+        <div className="flex gap-1 items-center">
+          <Icons.Bell className='text-white w-[2rem] h-[1.25rem] cursor-pointer' onClick={() => setIsModalOpen(true)} />
         <button className="nav-btn" onClick={showNavbar}>
           <Icons.Bars className="text-red" />
         </button>
+        </div>
       </header>
 
       <PopUp
