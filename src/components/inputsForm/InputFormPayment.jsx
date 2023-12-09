@@ -1,25 +1,65 @@
 import React, { useState } from "react";
 import Input from "../input/Input";
-import SelectInput from "../selectInput/SelectInput";
 import Button from "../button/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { db } from '../../firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 const InputFormPayment = () => {
-  const defaultFromDate = new Date().toISOString().split("T")[0]; // Today's date as the default "From" date
+  const defaultFromDate = new Date(); 
   const [formData, setFormData] = useState({
     itemName: "",
     amount: "",
-    phoneNumber: "",
     date: defaultFromDate,
-    price: "",
+    pricePerItem: "",
+    totalPrice: "",
   });
+
   const handleInputChange = (fieldName, value) => {
     setFormData((prevData) => ({
       ...prevData,
       [fieldName]: value,
     }));
   };
+
+
+  const calculateTotalPrice = () => {
+    const { amount, pricePerItem } = formData;
+    if (amount && pricePerItem) {
+      return amount * pricePerItem;
+    }
+    return 0;
+  };
+
+  const handleAddPayment = async () => {
+    try {
+
+      const updatedFormData = {
+        ...formData,
+        totalPrice: calculateTotalPrice().toString(), 
+      };
+
+      const docRef = await addDoc(collection(db, 'Payments'), updatedFormData);
+      console.log('Document written with ID: ', docRef.id);
+      toast.success("Payment added successfully!");
+    } catch (error) {
+      console.error('Error adding document: ', error);
+      toast.error("Error adding payment. Please try again later.", {
+        theme: "colored",
+      });
+    }
+
+
+    setFormData({
+      itemName: "",
+      amount: "",
+      date: defaultFromDate,
+      pricePerItem: "",
+      totalPrice: "",
+    });
+  };
+
   return (
     <div className="container mx-auto mt-4">
       <ToastContainer />
@@ -29,7 +69,7 @@ const InputFormPayment = () => {
           <Input
             type="text"
             placeholder="Enter Item Name"
-            onChange={(e) => handleInputChange("firstName", e.target.value)}
+            onChange={(e) => handleInputChange("itemName", e.target.value)}
             value={formData.itemName}
           />
         </div>
@@ -39,7 +79,7 @@ const InputFormPayment = () => {
           <Input
             type="number"
             placeholder="Please Enter Amount"
-            onChange={(e) => handleInputChange("lastName", e.target.value)}
+            onChange={(e) => handleInputChange("amount", e.target.value)}
             value={formData.amount}
           />
         </div>
@@ -50,7 +90,7 @@ const InputFormPayment = () => {
             type="date"
             placeholder="Date"
             value={formData.date}
-            onChange={(e) => handleInputChange("fromDate", e.target.value)}
+            onChange={(e) => handleInputChange("date", e.target.value)}
             width="w-full"
           />
         </div>
@@ -60,16 +100,24 @@ const InputFormPayment = () => {
           <Input
             type="number"
             placeholder="Please Enter Price Per Item"
-            value={formData.price}
-            onChange={(e) => handleInputChange("toDate", e.target.value)}
+            value={formData.pricePerItem}
+            onChange={(e) => handleInputChange("pricePerItem", e.target.value)}
             width="w-full"
           />
         </div>
       </div>
+
       <div className="flex justify-center items-center mt-[2rem]">
-        <Button title="Add Payment" onClick={()=>{}} />
+        <Button title="Add Payment" onClick={handleAddPayment} />
       </div>
-      <div className="my-[2rem]"></div>
+
+      <div className="my-[2rem]">
+        {/* Display the Total section */}
+        <div>
+          <h2>Total Price</h2>
+          <p>${calculateTotalPrice()}</p>
+        </div>
+      </div>
     </div>
   );
 };

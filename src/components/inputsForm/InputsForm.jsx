@@ -5,17 +5,20 @@ import Button from '../button/Button';
 import TableAddClient from '../table/TableAddClient';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { db } from '../../firebase';
+import { collection,addDoc,getDoc } from '@firebase/firestore';
+
 
 const InputsForm = () => {
   const defaultFromDate = new Date().toISOString().split('T')[0]; // Today's date as the default "From" date
   const defaultToDate = new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('T')[0]; // One month from today as the default "To" date
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
-    activity: 'Select',
-    fromDate: defaultFromDate,
-    toDate: defaultToDate,
+   Name: '',
+    LastName: '',
+    PhoneNumber: '',
+    Type: 'Select',
+    StartDate: defaultFromDate,
+    EndDate: defaultToDate,
   });
 
   const [clients, setClients] = useState([]);
@@ -27,40 +30,54 @@ const InputsForm = () => {
     }));
   };
 
-  const handleAddClient = (e) => {
-    if (!formData.firstName) {
+
+
+  const handleAddClient = async (e) => {
+    if (!formData.Name) {
       toast.error("First Name is mandatory!", {
         theme: "colored",
       });
-    } else if (!formData.lastName) {
+    } else if (!formData.LastName) {
       toast.error("Last Name is mandatory!", {
         theme: "colored",
       });
-    } else if (formData.activity === "Select") {
+    } else if (formData.Type === "Select") {
       toast.error("Please select an activity!", {
         theme: "colored",
       });
-    }else{
-    e.preventDefault();
-    toast.success("Client Added Successfully!", {
-      theme: "colored",
-    });
-    console.log('Form Data:', formData);
-
-    const newClient = { ...formData };
-    setClients((prevClients) => [...prevClients, newClient]);
-    
-
-    setFormData({
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      activity: 'Select',
-      fromDate: defaultFromDate,
-      toDate: defaultToDate,
-    });
+    } else {
+      e.preventDefault();
+  
+      const newClient = { ...formData };
+  
+      try {
+        newClient.StartDate = new Date(formData.StartDate);
+        newClient.EndDate = new Date(formData.EndDate);
+        const docRef = await addDoc(collection(db, 'Clients'), newClient);
+        console.log('Document written with ID: ', docRef.id);
+        toast.success("Client Added successfully");
+      } catch (error) {
+        console.error('Error adding document: ', error);
+        toast.error("Error adding client. Please try again later.", {
+          theme: "colored",
+        });
+      }
+  
+      setClients((prevClients) => [...prevClients, newClient]);
+      setFormData({
+        Name: '',
+        LastName: '',
+        PhoneNumber: '',
+        Type: 'Select',
+        StartDate: defaultFromDate,
+        EndDate: defaultToDate,
+      });
     }
   };
+  
+
+
+
 
   return (
     <div className="container mx-auto mt-4">
@@ -68,32 +85,32 @@ const InputsForm = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mx-[1.5rem]">
         <div className='flex flex-col'>
           <label>First Name :</label>
-          <Input type="text" placeholder="Enter First Name" onChange={(e) => handleInputChange('firstName', e.target.value)} value={formData.firstName}/>
+          <Input type="text" placeholder="Enter First Name" onChange={(e) => handleInputChange('Name', e.target.value)} value={formData.Name}/>
         </div>
         
         <div className='flex flex-col'>
           <label>Last Name :</label>
-          <Input type="text" placeholder="Enter Last Name" onChange={(e) => handleInputChange('lastName', e.target.value)} value={formData.lastName}/>
+          <Input type="text" placeholder="Enter Last Name" onChange={(e) => handleInputChange('LastName', e.target.value)} value={formData.LastName}/>
         </div>
         
         <div className='flex flex-col'>
           <label>Phone Number :</label>
-          <Input type="number" placeholder="Enter Phone Number" onChange={(e) => handleInputChange('phoneNumber', e.target.value)} value={formData.phoneNumber}/>
+          <Input type="number" placeholder="Enter Phone Number" onChange={(e) => handleInputChange('PhoneNumber', e.target.value)} value={formData.PhoneNumber}/>
         </div>
         
         <div className='flex flex-col'>
           <label>Select Activity :</label>
-          <SelectInput onChange={(value) => handleInputChange('activity', value)} value={formData.activity}/>
+          <SelectInput onChange={(value) => handleInputChange('Type', value)} value={formData.Type}/>
         </div>
         
         <div className='flex-1 flex-col'>
           <label>From :</label>
-          <Input type="date" placeholder="From" value={formData.fromDate} onChange={(e) => handleInputChange('fromDate', e.target.value)} width="w-full"/>
+          <Input type="date" placeholder="From" value={formData.StartDate} onChange={(e) => handleInputChange('StartDate', e.target.value)} width="w-full"/>
         </div>
         
         <div className='flex-1 flex-col'>
           <label>To :</label>
-          <Input type="date" placeholder="To" value={formData.toDate} onChange={(e) => handleInputChange('toDate', e.target.value)} width="w-full"/>
+          <Input type="date" placeholder="To" value={formData.EndDate} onChange={(e) => handleInputChange('EndDate', e.target.value)} width="w-full"/>
         </div>
 
       </div>
