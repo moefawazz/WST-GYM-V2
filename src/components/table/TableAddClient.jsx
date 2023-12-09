@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase';
 import { collection, getDocs } from "firebase/firestore";
 
 const TableAddClient = () => {
+  const navigate = useNavigate()
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
@@ -71,13 +73,13 @@ const TableAddClient = () => {
         </thead>
         <tbody>
           {clients.map((item, index) => (
-            <tr key={index} className={index % 2 === 0 ? 'bg-white text-black text-[0.7rem]' : 'bg-gray-200 text-[0.7rem]'}>
-              <td>{item.Name} {item.LastName}</td>
+            <tr key={index} className='text-[0.7rem]'>
+              <td onClick={() => navigate("/profile")} className='cursor-pointer'>{item.Name} {item.LastName}</td>
               <td>{item.Type}</td>
               <td>{item.PhoneNumber}</td>
               <td>
                 <div className="flex items-center">
-                  <span className={`w-4 h-4 rounded-full inline-block mr-2 ${getCircleColor(calculateTimeLeft(item.EndDate))}`}></span>
+                  <span className={`w-3 h-3 rounded-full inline-block mr-2 ${getCircleColor(calculateTimeLeft(item.EndDate))}`}></span>
                   <span className="flex items-center">{calculateTimeLeft(item.EndDate)}</span>
                 </div>
               </td>

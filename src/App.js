@@ -11,6 +11,7 @@ import Profits from "./view/Profits/Profits";
 import Navbar from "./components/navBar/Navbar";
 import Signin from "./view/Signup-Signin/Signin";
 import Signup from "./view/Signup-Signin/Signup";
+import Profile from "./view/Profile/Profile";
 import Footer from "./components/footer/Footer";
 import { AuthContextProvider } from "./context/AuthContext";
 import Qrcode1 from "./view/QrCode/Qrcode1";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/QrCode1" element={<Qrcode1 />} />
           <Route path="/payments" element={<Payments />} />
           <Route path="/profits" element={<Profits />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </AuthContextProvider>
       <Footer/>

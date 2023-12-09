@@ -55,7 +55,9 @@ const InputsForm = () => {
         newClient.EndDate = new Date(formData.EndDate);
         const docRef = await addDoc(collection(db, 'Clients'), newClient);
         console.log('Document written with ID: ', docRef.id);
-        toast.success("Client Added successfully");
+        toast.success("Client Added successfully" ,{
+          theme: "colored",
+        });
       } catch (error) {
         console.error('Error adding document: ', error);
         toast.error("Error adding client. Please try again later.", {
@@ -119,7 +121,7 @@ const InputsForm = () => {
       </div>
       <hr></hr>
       <div className="my-[2rem]">
-        <TableAddClient data={clients}/>
+        <TableAddClient />
       </div>
     </div>
   );

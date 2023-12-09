@@ -7,7 +7,7 @@ import { db } from '../../firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
 const InputFormPayment = () => {
-  const defaultFromDate = new Date(); 
+  const defaultFromDate = new Date().toISOString().split('T')[0]; 
   const [formData, setFormData] = useState({
     itemName: "",
     amount: "",
@@ -33,6 +33,19 @@ const InputFormPayment = () => {
   };
 
   const handleAddPayment = async () => {
+    if (!formData.itemName) {
+      toast.error("Item Name is mandatory!", {
+        theme: "colored",
+      });
+    } else if (!formData.amount) {
+      toast.error("Amount is mandatory!", {
+        theme: "colored",
+      });
+    } else if (formData.Type === "Select") {
+      toast.error("Please select an activity!", {
+        theme: "colored",
+      });
+    } else {
     try {
 
       const updatedFormData = {
@@ -48,6 +61,7 @@ const InputFormPayment = () => {
       toast.error("Error adding payment. Please try again later.", {
         theme: "colored",
       });
+    }
     }
 
 
@@ -75,7 +89,7 @@ const InputFormPayment = () => {
         </div>
 
         <div className="flex flex-col">
-          <label>amount ($) :</label>
+          <label>Amount ($) :</label>
           <Input
             type="number"
             placeholder="Please Enter Amount"
@@ -111,8 +125,7 @@ const InputFormPayment = () => {
         <Button title="Add Payment" onClick={handleAddPayment} />
       </div>
 
-      <div className="my-[2rem]">
-        {/* Display the Total section */}
+      <div className="my-[2rem] mx-[1.5rem]">
         <div>
           <h2>Total Price</h2>
           <p>${calculateTotalPrice()}</p>
