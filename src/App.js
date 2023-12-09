@@ -11,29 +11,27 @@ import Profits from "./view/Profits/Profits";
 import Navbar from "./components/navBar/Navbar";
 import Signin from "./view/Signup-Signin/Signin";
 import Signup from "./view/Signup-Signin/Signup";
+import Footer from "./components/footer/Footer";
 import { AuthContextProvider } from "./context/AuthContext";
 import Qrcode1 from "./view/QrCode/Qrcode1";
 function App() {
   return (
     <BrowserRouter>
-    <Navbar />
-    <AuthContextProvider>
-      <Routes>
-        <Route index element={<Home />} />
-      <Route path='/Signin' element={<Signin />} />
-      <Route path='/Signup' element={<Signup/>} />
-        <Route path="/Client" element={<Client/>}/>
-        <Route path="/QrCode" element={<Qrcode/>}/>
-        <Route path="/QrCode1" element={<Qrcode1/>}/>
-        <Route path="/payments" element={<Payments/>}/>
-        <Route path="/profits" element={<Profits/>}/>
- 
-
-   
-      </Routes>
+      <Navbar />
+      <AuthContextProvider>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/Signin" element={<Signin />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/Client" element={<Client />} />
+          <Route path="/QrCode" element={<Qrcode />} />
+          <Route path="/QrCode1" element={<Qrcode1 />} />
+          <Route path="/payments" element={<Payments />} />
+          <Route path="/profits" element={<Profits />} />
+        </Routes>
       </AuthContextProvider>
+      <Footer/>
     </BrowserRouter>
-    
   );
 }
 

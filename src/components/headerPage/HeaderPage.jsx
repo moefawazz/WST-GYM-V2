@@ -2,7 +2,7 @@ import React from 'react'
 
 const HeaderPage = ({title}) => {
   return (
-    <div className='border-b-2 border-red flex justify-start py-[1.5rem] px-[1.5rem] text-[1.5rem] pt-[6.2rem]'>
+    <div className='border-b-2 border-red flex justify-start py-[1.5rem] px-[1.5rem] text-[1.5rem] pt-[5.5rem]'>
         <h1 className='font-semibold'>{title}</h1>
     </div>
   )

@@ -38,7 +38,27 @@ header .nav-btn {
 
     nav .nav-close-btn {
         position: absolute;
-        top: 2rem;
-        right: 3rem;
+        top: 1rem;
+        right: 1.5rem;
     }
+}
+
+.dash-table {
+    width: 100%;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 8px;
+  }
+  
+  .dash-table td {
+    height: 40px;
+    color: #000;
+    border-bottom: 1px solid #000;
+  }
+  
+.dash-table th{
+    background-color: #990000;
+    height: 40px;
+    color: #fff;
+    border-radius: 0.25rem;
 }

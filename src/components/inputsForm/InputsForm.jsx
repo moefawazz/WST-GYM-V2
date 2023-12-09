@@ -3,6 +3,8 @@ import Input from '../input/Input';
 import SelectInput from '../selectInput/SelectInput';
 import Button from '../button/Button';
 import TableAddClient from '../table/TableAddClient';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const InputsForm = () => {
   const defaultFromDate = new Date().toISOString().split('T')[0]; // Today's date as the default "From" date
@@ -26,10 +28,23 @@ const InputsForm = () => {
   };
 
   const handleAddClient = (e) => {
-    if(!formData.firstName || !formData.lastName || formData.activity === "Select"){
-      console.log("these fields are mandatory")
+    if (!formData.firstName) {
+      toast.error("First Name is mandatory!", {
+        theme: "colored",
+      });
+    } else if (!formData.lastName) {
+      toast.error("Last Name is mandatory!", {
+        theme: "colored",
+      });
+    } else if (formData.activity === "Select") {
+      toast.error("Please select an activity!", {
+        theme: "colored",
+      });
     }else{
     e.preventDefault();
+    toast.success("Client Added Successfully!", {
+      theme: "colored",
+    });
     console.log('Form Data:', formData);
 
     const newClient = { ...formData };
@@ -49,6 +64,7 @@ const InputsForm = () => {
 
   return (
     <div className="container mx-auto mt-4">
+      <ToastContainer />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mx-[1.5rem]">
         <div className='flex flex-col'>
           <label>First Name :</label>
@@ -70,7 +86,6 @@ const InputsForm = () => {
           <SelectInput onChange={(value) => handleInputChange('activity', value)} value={formData.activity}/>
         </div>
         
-        <div className='flex gap-[0.4rem] w-full'>
         <div className='flex-1 flex-col'>
           <label>From :</label>
           <Input type="date" placeholder="From" value={formData.fromDate} onChange={(e) => handleInputChange('fromDate', e.target.value)} width="w-full"/>
@@ -80,12 +95,13 @@ const InputsForm = () => {
           <label>To :</label>
           <Input type="date" placeholder="To" value={formData.toDate} onChange={(e) => handleInputChange('toDate', e.target.value)} width="w-full"/>
         </div>
-        </div>
+
       </div>
-      <div className='flex justify-center items-center mt-[2.5rem]'>
+      <div className='flex justify-center items-center my-[2rem]'>
         <Button title="Add New Client" onClick={handleAddClient}/>
       </div>
-      <div className="mt-4">
+      <hr></hr>
+      <div className="my-[2rem]">
         <TableAddClient data={clients}/>
       </div>
     </div>

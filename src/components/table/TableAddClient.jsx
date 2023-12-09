@@ -60,23 +60,23 @@ const TableAddClient = () => {
   };
 
   return (
-    <div className="w-full max-w-screen-lg mx-auto">
-      <table className="w-full rounded-[1rem] overflow-hidden">
+    <div className="mx-[1.5rem]">
+      <table className="dash-table">
         <thead>
-          <tr className="text-black border border-red">
-            <th className="py-2 px-4 border border-red">Clients</th>
-            <th className="py-2 px-4 border border-red">Type (Zumba or Gym)</th>
-            <th className="py-2 px-4 border border-red">Phone Number</th>
-            <th className="py-2 px-4 border border-red">Time left</th>
+          <tr className=" text-[0.7rem]">
+            <th>Clients</th>
+            <th>Activity</th>
+            <th>Phone Number</th>
+            <th>Time left</th>
           </tr>
         </thead>
         <tbody>
           {clients.map((item, index) => (
-            <tr key={index} className={index % 2 === 0 ? 'bg-white text-black' : 'bg-gray-200'}>
-              <td className="py-2 px-4 border border-red">{item.Name} {item.LastName}</td>
-              <td className="py-2 px-4 border border-red">{item.Type}</td>
-              <td className="py-2 px-4 border border-red">{item.PhoneNumber}</td>
-              <td className="py-2 px-4 border border-red">
+            <tr key={index} className={index % 2 === 0 ? 'bg-white text-black text-[0.7rem]' : 'bg-gray-200 text-[0.7rem]'}>
+              <td>{item.Name} {item.LastName}</td>
+              <td>{item.Type}</td>
+              <td>{item.PhoneNumber}</td>
+              <td>
                 <div className="flex items-center">
                   <span className={`w-4 h-4 rounded-full inline-block mr-2 ${getCircleColor(calculateTimeLeft(item.EndDate, item.StartDate))}`}></span>
                   <span className="flex items-center">{calculateTimeLeft(item.EndDate, item.StartDate)}</span>

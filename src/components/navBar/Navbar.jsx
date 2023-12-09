@@ -24,7 +24,7 @@ const Navbar = () => {
     <>
       <header className='bg-wblack text-white py-[1rem] px-[1.5rem] flex justify-between fixed items-center w-screen'>
         <div>
-          <h1 className='text-[2rem] cursor-pointer'><Link to="/" onClick={() => handleLinkClick('/')}>LOGO</Link></h1>
+          <h1 className='text-[1.5rem] cursor-pointer'><Link to="/" onClick={() => handleLinkClick('/')}>LOGO</Link></h1>
         </div>
         <nav className="flex gap-[3rem]" ref={navRef}>
             <Link to='/Client' className={`hover:bg-red2 rounded-[4rem] px-[1rem] py-[0.5rem] ${activeLink === '/Client' && 'bg-red'}`} onClick={() => {handleLinkClick('/Client'); showNavbar()}}>
@@ -40,7 +40,7 @@ const Navbar = () => {
               QrScanner
             </Link>
           <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-            <Icons.Close className="text-red" />
+            <Icons.Close className="text-red text-[2.5rem]"/>
           </button>
         </nav>
         <div>

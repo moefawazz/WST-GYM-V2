@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'Raleway': ['Raleway', 'sans-serif'],
+        'Bebas Neue': ['Bebas Neue', 'sans-serif'],
       },
       colors: {
         red: '#990000',
