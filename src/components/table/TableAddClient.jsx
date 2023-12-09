@@ -20,7 +20,6 @@ const TableAddClient = () => {
         });
 
         setClients(clientData);
-        console.log(clients)
       } catch (error) {
         console.error('Error fetching client data:', error);
       }
@@ -28,20 +27,20 @@ const TableAddClient = () => {
 
     fetchClientData();
   }, []);
-  const calculateTimeLeft = (endDate, startDate) => {
-    if (endDate && startDate) {
-      const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
-      const endDateObj = endDate.toDate(); // Convert Firebase Timestamp to JavaScript Date
-      const startDateObj = startDate.toDate(); // Convert Firebase Timestamp to JavaScript Date
-      const timeDifference = endDateObj - startDateObj;
-      const daysDifference = Math.round(timeDifference / oneDay);
-  
-      return daysDifference > 0 ? `${daysDifference} days` : '0 days';
+
+  const calculateTimeLeft = (endDate) => {
+    if (endDate) {
+      const oneDay = 24 * 60 * 60 * 1000; 
+      const currentDate = new Date();
+      const endDateObj = endDate.toDate(); 
+      const timeDifference = endDateObj - currentDate;
+      const daysDifference = Math.floor(timeDifference / oneDay);
+
+      return daysDifference >= 0 ? `${daysDifference} days` : 'Expired';
     }
-  
+
     return 'N/A';
   };
-  
 
   const getCircleColor = (timeLeft) => {
     if (typeof timeLeft === 'string') {
@@ -56,7 +55,7 @@ const TableAddClient = () => {
       }
     }
     
-    return 'bg-red'; // Default color if timeLeft is undefined or parsing fails
+    return 'bg-red'; 
   };
 
   return (
@@ -78,8 +77,8 @@ const TableAddClient = () => {
               <td>{item.PhoneNumber}</td>
               <td>
                 <div className="flex items-center">
-                  <span className={`w-4 h-4 rounded-full inline-block mr-2 ${getCircleColor(calculateTimeLeft(item.EndDate, item.StartDate))}`}></span>
-                  <span className="flex items-center">{calculateTimeLeft(item.EndDate, item.StartDate)}</span>
+                  <span className={`w-4 h-4 rounded-full inline-block mr-2 ${getCircleColor(calculateTimeLeft(item.EndDate))}`}></span>
+                  <span className="flex items-center">{calculateTimeLeft(item.EndDate)}</span>
                 </div>
               </td>
             </tr>
