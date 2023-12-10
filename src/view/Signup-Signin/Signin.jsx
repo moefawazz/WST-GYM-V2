@@ -1,49 +1,59 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth } from '../../context/AuthContext.js';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../../context/AuthContext.js";
+import Input from "../../components/input/Input.jsx";
+import Button from "../../components/button/Button.jsx";
 
 const Signin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { signIn } = UserAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('')
+    setError("");
     try {
-      await signIn(email, password)
-      navigate('/')
+      await signIn(email, password);
+      navigate("/");
     } catch (e) {
-      setError(e.message)
-      console.log(e.message)
+      setError(e.message);
+      console.log(e.message);
     }
   };
 
   return (
-    <div className='max-w-[700px] mx-auto my-16 p-4'>
+    <div className="p-[1.5rem] min-h-screen flex flex-col justify-center">
       <div>
-        <h1 className='text-2xl font-bold py-2'>Sign in to your account</h1>
-        <p className='py-2'>
-          Don't have an account yet?{' '}
-          <Link to='/signup' className='underline'>
+        <h1 className="text-2xl font-bold py-2">Sign in to your account</h1>
+        <p className="py-2">
+          Don't have an account yet?{" "}
+          <Link to="/signup" className="underline">
             Sign up.
           </Link>
         </p>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className='flex flex-col py-2'>
-          <label className='py-2 font-medium'>Email Address</label>
-          <input onChange={(e) => setEmail(e.target.value)} className='border p-3' type='email' />
+        <div className="flex flex-col py-2">
+          <label className="py-2 font-medium">Email Address</label>
+          <Input
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter Your Email"
+            type="email"
+          />
         </div>
-        <div className='flex flex-col py-2'>
-          <label className='py-2 font-medium'>Password</label>
-          <input onChange={(e) => setPassword(e.target.value)} className='border p-3' type='password' />
+        <div className="flex flex-col py-2">
+          <label className="py-2 font-medium">Password</label>
+          <Input
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter Your Password"
+            type="password"
+          />
         </div>
-        <button className='border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white'>
-          Sign In
-        </button>
+        <div className="my-4">
+          <Button title="Sign In" width="w-full" />
+        </div>
       </form>
     </div>
   );

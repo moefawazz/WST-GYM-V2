@@ -1,12 +1,14 @@
 import React from "react";
+import Input from "../input/Input";
+import SelectInput from "../selectInput/SelectInput";
 
-const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm }) => {
+const PopUpUpdate = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm }) => {
   if (!isOpen) {
     return null;
   }
   return (
     <div className="fixed z-50 inset-0 overflow-y-auto">
-      <div className="flex items-center justify-center min-h-screen pt-4 pb-20 text-center sm:block sm:p-0">
+      <div className="flex items-center justify-center min-h-screen py-4 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
@@ -35,6 +37,37 @@ const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm 
               </p>
             </div>
           </div>
+          <div>
+          <div className='flex flex-col'>
+          <label className='py-2 font-medium'>First Name :</label>
+          <Input type="text" placeholder="Enter First Name" />
+        </div>
+        
+        <div className='flex flex-col'>
+          <label className='py-2 font-medium'>Last Name :</label>
+          <Input type="text" placeholder="Enter Last Name" />
+        </div>
+        
+        <div className='flex flex-col'>
+          <label className='py-2 font-medium'>Phone Number :</label>
+          <Input type="number" placeholder="Enter Phone Number" />
+        </div>
+        
+        <div className='flex flex-col'>
+          <label className='py-2 font-medium'>Select Activity :</label>
+          <SelectInput />
+        </div>
+        
+        <div className='flex flex-col'>
+          <label className='py-2 font-medium'>From :</label>
+          <Input type="date" placeholder="From"  width="w-full"/>
+        </div>
+        
+        <div className='flex flex-col'>
+          <label className='py-2 font-medium'>To :</label>
+          <Input type="date" placeholder="To"  width="w-full"/>
+        </div>
+          </div>
           <div className="mt-5 sm:mt-6">
             <button
               onClick={onConfirm}
@@ -57,4 +90,4 @@ const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm 
   );
 };
 
-export default PopUp;
+export default PopUpUpdate;

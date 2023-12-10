@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Input from '../input/Input';
 import SelectInput from '../selectInput/SelectInput';
 import Button from '../button/Button';
+import Icons from '../../assets/icons/Icons';
 import TableAddClient from '../table/TableAddClient';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +21,12 @@ const InputsForm = () => {
     StartDate: defaultFromDate,
     EndDate: defaultToDate,
   });
+
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const toggleCollapse = () => {
+    setIsCollapsed((prev) => !prev);
+  };
 
   const [clients, setClients] = useState([]);
 
@@ -76,50 +83,56 @@ const InputsForm = () => {
       });
     }
   };
-  
-
-
-
 
   return (
     <div className="container mx-auto mt-4">
       <ToastContainer />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mx-[1.5rem]">
+      <div className='flex justify-end mt-[1.5rem] mr-[1.5rem]'>
+      <Icons.Down
+          className={`transform transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}
+          onClick={toggleCollapse}
+        />
+      </div>
+      <div className={`${isCollapsed ? 'hidden' : ''}`}>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mx-[1.5rem]'>
         <div className='flex flex-col'>
-          <label>First Name :</label>
+          <label className='py-2 font-medium'>First Name :</label>
           <Input type="text" placeholder="Enter First Name" onChange={(e) => handleInputChange('Name', e.target.value)} value={formData.Name}/>
         </div>
         
         <div className='flex flex-col'>
-          <label>Last Name :</label>
+          <label className='py-2 font-medium'>Last Name :</label>
           <Input type="text" placeholder="Enter Last Name" onChange={(e) => handleInputChange('LastName', e.target.value)} value={formData.LastName}/>
         </div>
         
         <div className='flex flex-col'>
-          <label>Phone Number :</label>
+          <label className='py-2 font-medium'>Phone Number :</label>
           <Input type="number" placeholder="Enter Phone Number" onChange={(e) => handleInputChange('PhoneNumber', e.target.value)} value={formData.PhoneNumber}/>
         </div>
         
         <div className='flex flex-col'>
-          <label>Select Activity :</label>
+          <label className='py-2 font-medium'>Select Activity :</label>
           <SelectInput onChange={(value) => handleInputChange('Type', value)} value={formData.Type}/>
         </div>
         
-        <div className='flex-1 flex-col'>
-          <label>From :</label>
+        <div className='flex flex-col'>
+          <label className='py-2 font-medium'>From :</label>
           <Input type="date" placeholder="From" value={formData.StartDate} onChange={(e) => handleInputChange('StartDate', e.target.value)} width="w-full"/>
         </div>
         
-        <div className='flex-1 flex-col'>
-          <label>To :</label>
+        <div className='flex flex-col'>
+          <label className='py-2 font-medium'>To :</label>
           <Input type="date" placeholder="To" value={formData.EndDate} onChange={(e) => handleInputChange('EndDate', e.target.value)} width="w-full"/>
         </div>
 
       </div>
       <div className='flex justify-center items-center my-[2rem]'>
         <Button title="Add New Client" onClick={handleAddClient}/>
-      </div>
+      </div>      
       <hr></hr>
+      </div>
+
+
       <div className="my-[2rem]">
         <TableAddClient />
       </div>

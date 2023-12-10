@@ -79,7 +79,7 @@ const InputFormPayment = () => {
       <ToastContainer />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mx-[1.5rem]">
         <div className="flex flex-col">
-          <label>Item Name :</label>
+          <label className='py-2 font-medium'>Item Name :</label>
           <Input
             type="text"
             placeholder="Enter Item Name"
@@ -89,7 +89,7 @@ const InputFormPayment = () => {
         </div>
 
         <div className="flex flex-col">
-          <label>Amount ($) :</label>
+          <label className='py-2 font-medium'>Amount ($) :</label>
           <Input
             type="number"
             placeholder="Please Enter Amount"
@@ -98,8 +98,8 @@ const InputFormPayment = () => {
           />
         </div>
 
-        <div className="flex-1 flex-col">
-          <label>Date :</label>
+        <div className="flex flex-col">
+          <label className='py-2 font-medium'>Date :</label>
           <Input
             type="date"
             placeholder="Date"
@@ -109,8 +109,8 @@ const InputFormPayment = () => {
           />
         </div>
 
-        <div className="flex-1 flex-col">
-          <label>Price Per Item ($) :</label>
+        <div className="flex flex-col">
+          <label className='py-2 font-medium'>Price Per Item ($) :</label>
           <Input
             type="number"
             placeholder="Please Enter Price Per Item"

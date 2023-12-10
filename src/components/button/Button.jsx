@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Button = ({title, onClick}) => {
+const Button = ({title, onClick, width}) => {
   return (
-    <button className='rounded-[3.125rem] bg-red px-[1.5rem] py-[0.43rem] text-white hover:bg-red2' onClick={onClick}>{title}</button>
+    <button className={`rounded-[3.125rem] bg-red px-[1.5rem] py-[0.43rem] text-white hover:bg-red2 ${width}`} onClick={onClick}>{title}</button>
   )
 }
 
