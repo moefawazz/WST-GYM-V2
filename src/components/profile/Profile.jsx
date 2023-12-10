@@ -6,7 +6,7 @@ import PopUp from "../popUp/PopUp";
 import PopUpUpdate from "../popUp/PopUpUpdate";
 import PopUpDelete from "../popUp/PopUpDelete"
 import { db } from "../../firebase";
-import { doc, getDoc,updateDoc } from "firebase/firestore";
+import { doc, getDoc,updateDoc,deleteDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 const Profile = () => {
   const navigate = useNavigate();
@@ -59,6 +59,45 @@ toast.success("client updated succesfully")
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      console.log("hi")
+      const clientDocRef = doc(db, "Clients", id);
+      await deleteDoc(clientDocRef);
+      toast.success("Client deleted successfully");
+
+ 
+      navigate("/client");
+    } catch (error) {
+      toast.error("Error deleting the client");
+      console.error("Error deleting client:", error);
+    }
+  };
+
+  const handleRenew = async () => {
+    try {
+      const clientDocRef = doc(db, "Clients", id);
+      const clientDoc = await getDoc(clientDocRef);
+
+      if (clientDoc.exists()) {
+        const currentEndDate = clientDoc.data().EndDate.toDate();
+        const newEndDate = new Date(currentEndDate);
+        newEndDate.setDate(newEndDate.getDate() + 30);
+
+        // Update the document in the Firestore collection with the new EndDate
+        await updateDoc(clientDocRef, { EndDate: newEndDate });
+        toast.success("Subscription renewed successfully");
+
+        setIsModalRenewOpen(false);
+        fetchClientData();
+      } else {
+        console.error("Client not found");
+      }
+    } catch (error) {
+      toast.error("Error renewing subscription");
+      console.error("Error renewing subscription:", error);
+    }
+  };
 
 
   const calculateTimeLeft = (endDate) => {
@@ -159,24 +198,25 @@ toast.success("client updated succesfully")
             </div>
           </div>
 <ToastContainer/>
-          <PopUp
+          <PopUpDelete
             isOpen={isModalOpen}
             title="Delete Client"
             text="Are you sure you want to delete?"
             confirmText="Delete"
             bgColor="bg-red"
             onCancel={closeDeleteModal}
-            onConfirm={closeDeleteModal}
+            onConfirm={handleDelete}
           />
-          <PopUpDelete
-            isOpen={isModalRenewOpen}
-            title="Renew Subscription"
-            text="Are you sure you want to renew subscription (+30 Days)?"
-            confirmText="Renew"
-            bgColor="bg-yellow-600"
-            onCancel={closeDeleteModal}
-            onConfirm={closeDeleteModal}
-          />
+     <PopUp
+  isOpen={isModalRenewOpen}
+  title="Renew Subscription"
+  text="Are you sure you want to renew subscription (+30 Days)?"
+  confirmText="Renew"
+  bgColor="bg-yellow-600"
+  onCancel={closeDeleteModal}
+  onConfirm={handleRenew}  
+/>
+
       <PopUpUpdate
   isOpen={isModalUpdateOpen}
   title="Update Client"
