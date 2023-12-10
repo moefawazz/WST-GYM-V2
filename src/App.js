@@ -29,7 +29,7 @@ function App() {
           <Route path="/QrCode1" element={<Qrcode1 />} />
           <Route path="/payments" element={<Payments />} />
           <Route path="/profits" element={<Profits />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path={`/profile/:id`} element={<Profile />} />
         </Routes>
       </AuthContextProvider>
       <Footer/>

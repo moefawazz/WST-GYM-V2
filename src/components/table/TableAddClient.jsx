@@ -14,20 +14,23 @@ const TableAddClient = () => {
         const docRef = collection(db, 'Clients');
         const snapshot = await getDocs(docRef);
         let clientData = [];
-
+  
         snapshot.forEach((doc) => {
           if (doc.exists()) {
             const specificDocument = doc.data();
+           
+            specificDocument.id = doc.id; 
             clientData.push(specificDocument);
+            console.log(specificDocument);
           }
         });
-
+  
         setClients(clientData);
       } catch (error) {
         console.error('Error fetching client data:', error);
       }
     };
-
+  
     fetchClientData();
   }, []);
 
@@ -97,10 +100,10 @@ const TableAddClient = () => {
           {filteredClients.map((item, index) => (
             <tr key={index} className="text-[0.7rem]">
               <td
-                onClick={() => {
-                  navigate('/profile');
-                  scrollToTop();
-                }}
+              onClick={() => {
+                navigate(`/profile/${item.id}`); 
+                scrollToTop();
+              }}
                 className="cursor-pointer"
               >
                 {item.Name} {item.LastName}

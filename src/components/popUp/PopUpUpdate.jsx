@@ -1,21 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Input from "../input/Input";
 import SelectInput from "../selectInput/SelectInput";
+import { ToastContainer, toast } from "react-toastify";
 
-const PopUpUpdate = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm }) => {
+const PopUpUpdate = ({ title, text, confirmText, bgColor, isOpen, onCancel, handleUpdate, initialData }) => {
+  const { Name = '', LastName = '', PhoneNumber = '', Type = '', StartDate = null, EndDate = null } = initialData || {};
+  
+  const [firstName, setFirstName] = useState(Name);
+  const [lastName, setLastName] = useState(LastName);
+  const [phone, setPhone] = useState(PhoneNumber);
+  const [activity, setActivity] = useState(Type);
+  const [fromDate, setFromDate] = useState(StartDate ? StartDate.toDate().toISOString().split('T')[0] : '');
+  const [toDate, setToDate] = useState(EndDate ? EndDate.toDate().toISOString().split('T')[0] : '');
+
+  const handleFirstNameChange = (e) => setFirstName(e.target.value);
+  const handleLastNameChange = (e) => setLastName(e.target.value);
+  const handlePhoneChange = (e) => setPhone(e.target.value);
+  const handleActivityChange = (value) => setActivity(value);
+  const handleFromDateChange = (e) => setFromDate(e.target.value);
+  const handleToDateChange = (e) => setToDate(e.target.value);
+
+  useEffect(() => {
+    setFirstName(Name);
+    setLastName(LastName);
+    setPhone(PhoneNumber);
+    setActivity(Type);
+    setFromDate(StartDate ? StartDate.toDate().toISOString().split('T')[0] : '');
+    setToDate(EndDate ? EndDate.toDate().toISOString().split('T')[0] : '');
+  }, [isOpen, initialData]);
+
   if (!isOpen) {
     return null;
   }
+
+  const handleConfirm = () => {
+    const updatedData = {
+      Name: firstName,
+      LastName: lastName,
+      PhoneNumber: phone,
+      Type: activity,
+      StartDate: new Date(fromDate),
+      EndDate: new Date(toDate),
+    };
+
+    handleUpdate(updatedData);
+  };
+
   return (
     <div className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen py-4 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
-        <span
-          className="hidden sm:inline-block sm:align-middle sm:h-screen"
-          aria-hidden="true"
-        >
+        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
           &#8203;
         </span>
         <div
@@ -26,51 +63,46 @@ const PopUpUpdate = ({ title, text, confirmText, bgColor, isOpen, onCancel, onCo
         >
           <div>
             <div className="mt-3 text-center sm:mt-5">
-              <h3
-                className="text-lg leading-6 font-medium text-gray-900"
-                id="modal-headline"
-              >
+              <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
                 {title}
               </h3>
-              <p className="mt-2 text-sm text-gray-500">
-                {text}
-              </p>
+              <p className="mt-2 text-sm text-gray-500">{text}</p>
             </div>
           </div>
           <div>
-          <div className='flex flex-col'>
-          <label className='py-2 font-medium'>First Name :</label>
-          <Input type="text" placeholder="Enter First Name" />
-        </div>
-        
-        <div className='flex flex-col'>
-          <label className='py-2 font-medium'>Last Name :</label>
-          <Input type="text" placeholder="Enter Last Name" />
-        </div>
-        
-        <div className='flex flex-col'>
-          <label className='py-2 font-medium'>Phone Number :</label>
-          <Input type="number" placeholder="Enter Phone Number" />
-        </div>
-        
-        <div className='flex flex-col'>
-          <label className='py-2 font-medium'>Select Activity :</label>
-          <SelectInput />
-        </div>
-        
-        <div className='flex flex-col'>
-          <label className='py-2 font-medium'>From :</label>
-          <Input type="date" placeholder="From"  width="w-full"/>
-        </div>
-        
-        <div className='flex flex-col'>
-          <label className='py-2 font-medium'>To :</label>
-          <Input type="date" placeholder="To"  width="w-full"/>
-        </div>
+            <div className='flex flex-col'>
+              <label className='py-2 font-medium'>First Name :</label>
+              <Input type="text" placeholder="Enter First Name" value={firstName} onChange={handleFirstNameChange} />
+            </div>
+
+            <div className='flex flex-col'>
+              <label className='py-2 font-medium'>Last Name :</label>
+              <Input type="text" placeholder="Enter Last Name" value={lastName} onChange={handleLastNameChange} />
+            </div>
+
+            <div className='flex flex-col'>
+              <label className='py-2 font-medium'>Phone Number :</label>
+              <Input type="number" placeholder="Enter Phone Number" value={phone} onChange={handlePhoneChange} />
+            </div>
+
+            <div className='flex flex-col'>
+              <label className='py-2 font-medium'>Select Activity :</label>
+              <SelectInput value={activity} onChange={handleActivityChange} />
+            </div>
+
+            <div className='flex flex-col'>
+              <label className='py-2 font-medium'>From :</label>
+              <Input type="date" placeholder="From" width="w-full" value={fromDate} onChange={handleFromDateChange} />
+            </div>
+
+            <div className='flex flex-col'>
+              <label className='py-2 font-medium'>To :</label>
+              <Input type="date" placeholder="To" width="w-full" value={toDate} onChange={handleToDateChange} />
+            </div>
           </div>
           <div className="mt-5 sm:mt-6">
             <button
-              onClick={onConfirm}
+              onClick={handleConfirm}
               type="button"
               className={`inline-flex justify-center w-full rounded-md border bg-red-600 shadow-sm px-4 py-2 text-base font-medium text-white ${bgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm`}
             >
