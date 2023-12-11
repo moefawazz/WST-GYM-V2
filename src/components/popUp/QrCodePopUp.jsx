@@ -32,7 +32,7 @@ const PopUpQrCode = ({ title, text, bgColor, isOpen, onCancel }) => {
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-            <div className="mt-3">
+            <div className="mt-3 flex items-center justify-center">
               <QRCode ref={qrCodeRef} size={128} />
             </div>
           <div>

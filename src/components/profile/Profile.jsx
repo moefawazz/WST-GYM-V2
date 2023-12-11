@@ -4,14 +4,14 @@ import Icons from "../../assets/icons/Icons";
 import { useParams, useNavigate } from "react-router-dom";
 import PopUp from "../popUp/PopUp";
 import PopUpUpdate from "../popUp/PopUpUpdate";
-import PopUpDelete from "../popUp/PopUpDelete"
+import PopUpDelete from "../popUp/PopUpDelete";
 import PopUpQrCode from "../popUp/QrCodePopUp";
 import { db } from "../../firebase";
-import { doc, getDoc,updateDoc,deleteDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 const Profile = () => {
   const navigate = useNavigate();
-  const[isQrModalOpen,setisQrModalOpen]=useState(false)
+  const [isQrModalOpen, setisQrModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [isModalRenewOpen, setIsModalRenewOpen] = useState(false);
@@ -21,9 +21,8 @@ const Profile = () => {
     setIsModalOpen(false);
     setIsModalUpdateOpen(false);
     setIsModalRenewOpen(false);
-    setisQrModalOpen(false)
+    setisQrModalOpen(false);
   };
-
 
   const fetchClientData = async () => {
     try {
@@ -52,27 +51,34 @@ const Profile = () => {
       // Update the document in the Firestore collection
       const clientDocRef = doc(db, "Clients", id);
       await updateDoc(clientDocRef, updatedData);
-toast.success("client updated succesfully")
- 
+      toast.success("client updated succesfully", {
+        theme: "colored",
+      });
+
       setIsModalUpdateOpen(false);
       fetchClientData();
     } catch (error) {
-      toast.error("error updating the client")
+      toast.error("error updating the client", {
+        theme: "colored",
+      });
       console.error("Error updating client data:", error);
     }
   };
 
   const handleDelete = async () => {
     try {
-      console.log("hi")
+      console.log("hi");
       const clientDocRef = doc(db, "Clients", id);
       await deleteDoc(clientDocRef);
-      toast.success("Client deleted successfully");
+      toast.success("Client deleted successfully", {
+        theme: "colored",
+      });
 
- 
       navigate("/client");
     } catch (error) {
-      toast.error("Error deleting the client");
+      toast.error("Error deleting the client", {
+        theme: "colored",
+      });
       console.error("Error deleting client:", error);
     }
   };
@@ -89,7 +95,9 @@ toast.success("client updated succesfully")
 
         // Update the document in the Firestore collection with the new EndDate
         await updateDoc(clientDocRef, { EndDate: newEndDate });
-        toast.success("Subscription renewed successfully");
+        toast.success("Subscription renewed successfully", {
+          theme: "colored",
+        });
 
         setIsModalRenewOpen(false);
         fetchClientData();
@@ -97,11 +105,12 @@ toast.success("client updated succesfully")
         console.error("Client not found");
       }
     } catch (error) {
-      toast.error("Error renewing subscription");
+      toast.error("Error renewing subscription", {
+        theme: "colored",
+      });
       console.error("Error renewing subscription:", error);
     }
   };
-
 
   const calculateTimeLeft = (endDate) => {
     if (endDate) {
@@ -172,11 +181,11 @@ toast.success("client updated succesfully")
           <div>
             <h1 className="text-red">Time Left</h1>
             <h2>
-            <span
-                    className={`w-3 h-3 rounded-full inline-block mr-2 ${getCircleColor(calculateTimeLeft(
-                      clientData.EndDate
-                    ))}`}
-                  ></span>
+              <span
+                className={`w-3 h-3 rounded-full inline-block mr-2 ${getCircleColor(
+                  calculateTimeLeft(clientData.EndDate)
+                )}`}
+              ></span>
               {calculateTimeLeft(clientData.EndDate)}{" "}
             </h2>
           </div>
@@ -206,7 +215,7 @@ toast.success("client updated succesfully")
               <Icons.QrCode />
             </div>
           </div>
-<ToastContainer/>
+          <ToastContainer />
           <PopUpDelete
             isOpen={isModalOpen}
             title="Delete Client"
@@ -216,36 +225,32 @@ toast.success("client updated succesfully")
             onCancel={closeDeleteModal}
             onConfirm={handleDelete}
           />
-     <PopUp
-  isOpen={isModalRenewOpen}
-  title="Renew Subscription"
-  text="Are you sure you want to renew subscription (+30 Days)?"
-  confirmText="Renew"
-  bgColor="bg-yellow-600"
-  onCancel={closeDeleteModal}
-  onConfirm={handleRenew}  
-/>
-     <PopUpQrCode
-  isOpen={isQrModalOpen}
-  title="QrCode"
+          <PopUp
+            isOpen={isModalRenewOpen}
+            title="Renew Subscription"
+            text="Are you sure you want to renew subscription (+30 Days)?"
+            confirmText="Renew"
+            bgColor="bg-yellow-600"
+            onCancel={closeDeleteModal}
+            onConfirm={handleRenew}
+          />
+          <PopUpQrCode
+            isOpen={isQrModalOpen}
+            title="QrCode"
+            bgColor="bg-red"
+            onCancel={closeDeleteModal}
+          />
 
-
-  bgColor="bg-green-600"
-  onCancel={closeDeleteModal}
-
-/>
-
-      <PopUpUpdate
-  isOpen={isModalUpdateOpen}
-  title="Update Client"
-  text=""
-  confirmText="Update"
-  bgColor="bg-green-600"
-  onCancel={closeDeleteModal}
-handleUpdate={handleUpdate}
-  initialData={clientData}
-/>
-
+          <PopUpUpdate
+            isOpen={isModalUpdateOpen}
+            title="Update Client"
+            text=""
+            confirmText="Update"
+            bgColor="bg-green-600"
+            onCancel={closeDeleteModal}
+            handleUpdate={handleUpdate}
+            initialData={clientData}
+          />
         </>
       ) : (
         <div>Loading...</div>

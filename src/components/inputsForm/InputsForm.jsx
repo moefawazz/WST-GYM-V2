@@ -89,7 +89,7 @@ const InputsForm = () => {
       <ToastContainer />
       <div className='flex justify-end mt-[1.5rem] mr-[1.5rem]'>
       <Icons.Down
-          className={`transform transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}
+          className={`transform transition-transform duration-300 ${isCollapsed ? 'rotate-180 text-red' : ''}`}
           onClick={toggleCollapse}
         />
       </div>
