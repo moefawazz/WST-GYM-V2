@@ -46,7 +46,7 @@ const Navbar = () => {
           </button>
         </nav>
         <div className="flex gap-1 items-center">
-          <Icons.Bell className='text-white w-[2rem] h-[1.25rem] cursor-pointer' />
+          {/* <Icons.Bell className='text-white w-[2rem] h-[1.25rem] cursor-pointer' /> */}
         <button className="nav-btn" onClick={showNavbar}>
           <Icons.Bars className="text-red" />
         </button>
