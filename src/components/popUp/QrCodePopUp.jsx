@@ -1,19 +1,25 @@
 import React, { useRef, useEffect } from "react";
-import QRCode from "qrcode.react";
+import QRCode from "qrcode";
+
 const PopUpQrCode = ({ title, text, bgColor, isOpen, onCancel }) => {
-    const qrCodeRef = useRef(null);
-    useEffect(() => {
-     
-        const currentPageUrl = window.location.href;
- 
-        if (qrCodeRef.current) {
-          qrCodeRef.current.makeCode(currentPageUrl);
-        }
-      }, [isOpen]);
-      
+  const qrCodeRef = useRef(null);
+
+  useEffect(() => {
+    const currentPageUrl = window.location.href;
+
+    // Check if qrCodeRef.current is not null before generating the QR code
+    if (qrCodeRef.current) {
+      // Generate the QR code using qrcode library
+      QRCode.toCanvas(qrCodeRef.current, currentPageUrl, function (error) {
+        if (error) console.error("Error generating QR code:", error);
+      });
+    }
+  }, [isOpen]);
+
   if (!isOpen) {
     return null;
   }
+
   return (
     <div className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen pt-4 pb-20 text-center sm:block sm:p-0">
@@ -32,9 +38,9 @@ const PopUpQrCode = ({ title, text, bgColor, isOpen, onCancel }) => {
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-            <div className="mt-3">
-              <QRCode ref={qrCodeRef} size={128} />
-            </div>
+          <div className="mt-3">
+            <canvas ref={qrCodeRef} width={128} height={128}></canvas>
+          </div>
           <div>
             <div className="mt-3 text-center sm:mt-5">
               <h3
@@ -43,10 +49,7 @@ const PopUpQrCode = ({ title, text, bgColor, isOpen, onCancel }) => {
               >
                 {title}
               </h3>
-              <p className="mt-2 text-sm text-gray-500">
-                {text}
-              </p>
-          
+              <p className="mt-2 text-sm text-gray-500">{text}</p>
             </div>
           </div>
           <div className="mt-5 sm:mt-6">
