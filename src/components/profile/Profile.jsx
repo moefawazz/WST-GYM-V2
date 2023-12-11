@@ -5,11 +5,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import PopUp from "../popUp/PopUp";
 import PopUpUpdate from "../popUp/PopUpUpdate";
 import PopUpDelete from "../popUp/PopUpDelete"
+import PopUpQrCode from "../popUp/QrCodePopUp";
 import { db } from "../../firebase";
 import { doc, getDoc,updateDoc,deleteDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 const Profile = () => {
   const navigate = useNavigate();
+  const[isQrModalOpen,setisQrModalOpen]=useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [isModalRenewOpen, setIsModalRenewOpen] = useState(false);
@@ -19,6 +21,7 @@ const Profile = () => {
     setIsModalOpen(false);
     setIsModalUpdateOpen(false);
     setIsModalRenewOpen(false);
+    setisQrModalOpen(false)
   };
 
 
@@ -196,6 +199,12 @@ toast.success("client updated succesfully")
             >
               <Icons.Delete />
             </div>
+            <div
+              className="rounded-[0.25rem] bg-red p-[0.25rem] text-white"
+              onClick={() => setisQrModalOpen(true)}
+            >
+              <Icons.QrCode />
+            </div>
           </div>
 <ToastContainer/>
           <PopUpDelete
@@ -215,6 +224,15 @@ toast.success("client updated succesfully")
   bgColor="bg-yellow-600"
   onCancel={closeDeleteModal}
   onConfirm={handleRenew}  
+/>
+     <PopUpQrCode
+  isOpen={isQrModalOpen}
+  title="QrCode"
+
+
+  bgColor="bg-green-600"
+  onCancel={closeDeleteModal}
+
 />
 
       <PopUpUpdate

@@ -1,11 +1,12 @@
 import { FaBell, FaBars, FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { PiUsersThree } from "react-icons/pi";
-import { MdOutlinePayment, MdToday, MdAutorenew, MdModeEdit, MdDelete } from "react-icons/md";
+import { MdOutlinePayment, MdToday, MdAutorenew, MdModeEdit, MdDelete,MdQrCode } from "react-icons/md";
 import { AiOutlineDollar } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 
 const Icons = {
+  QrCode:MdQrCode,
   Bell: FaBell,
   Bars: FaBars,
   Close: IoClose,
