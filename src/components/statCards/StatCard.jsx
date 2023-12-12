@@ -45,7 +45,7 @@ const StatCard = () => {
     <h1 className="text-[1.7rem]">Performance Overview</h1>
     <div className="flex flex-1 gap-[2rem] flex-wrap">
       <Cards text="Clients" count={clientsCount} icon={<Icons.Users/>}/>
-      <Cards text="Payments" count={totalPayments}  icon={<Icons.Credit/>}/>
+      <Cards text="Payments" count={totalPayments+' $'}  icon={<Icons.Credit/>}/>
     </div>
     <div className="flex flex-1 gap-[2rem] flex-wrap">
       <Cards text="Profits" count="300" icon={<Icons.Dollar/>}/>
