@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Input from "../input/Input";
 import Button from "../button/Button";
+import TableAddPayment from "../table/TableAddPayment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { db } from '../../firebase';
@@ -38,11 +39,11 @@ const InputFormPayment = () => {
         theme: "colored",
       });
     } else if (!formData.amount) {
-      toast.error("Amount is mandatory!", {
+      toast.error("Quantity is mandatory!", {
         theme: "colored",
       });
-    } else if (formData.Type === "Select") {
-      toast.error("Please select an activity!", {
+    } else if (!formData.pricePerItem) {
+      toast.error("Price Per Item is mandatory!", {
         theme: "colored",
       });
     } else {
@@ -89,12 +90,22 @@ const InputFormPayment = () => {
         </div>
 
         <div className="flex flex-col">
-          <label className='py-2 font-medium'>Amount ($) :</label>
+          <label className='py-2 font-medium'>Quantity :</label>
           <Input
             type="number"
-            placeholder="Please Enter Amount"
+            placeholder="Please Enter Quantity"
             onChange={(e) => handleInputChange("amount", e.target.value)}
             value={formData.amount}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className='py-2 font-medium'>Price Per Item ($) :</label>
+          <Input
+            type="number"
+            placeholder="Please Enter Price Per Item"
+            value={formData.pricePerItem}
+            onChange={(e) => handleInputChange("pricePerItem", e.target.value)}
+            width="w-full"
           />
         </div>
 
@@ -109,27 +120,15 @@ const InputFormPayment = () => {
           />
         </div>
 
-        <div className="flex flex-col">
-          <label className='py-2 font-medium'>Price Per Item ($) :</label>
-          <Input
-            type="number"
-            placeholder="Please Enter Price Per Item"
-            value={formData.pricePerItem}
-            onChange={(e) => handleInputChange("pricePerItem", e.target.value)}
-            width="w-full"
-          />
-        </div>
       </div>
 
-      <div className="flex justify-center items-center mt-[2rem]">
+      <div className="flex justify-center items-center my-[2rem]">
         <Button title="Add Payment" onClick={handleAddPayment} />
       </div>
+      <hr></hr>
 
-      <div className="my-[2rem] mx-[1.5rem]">
-        <div>
-          <h2>Total Price</h2>
-          <p>${calculateTotalPrice()}</p>
-        </div>
+      <div className="my-[2rem]">
+        <TableAddPayment />
       </div>
     </div>
   );
