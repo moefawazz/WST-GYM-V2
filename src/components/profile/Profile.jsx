@@ -9,6 +9,7 @@ import PopUpQrCode from "../popUp/QrCodePopUp";
 import { db } from "../../firebase";
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
+import Button from "../button/Button";
 const Profile = () => {
   const navigate = useNavigate();
   const [isQrModalOpen, setisQrModalOpen] = useState(false);
@@ -23,7 +24,13 @@ const Profile = () => {
     setIsModalRenewOpen(false);
     setisQrModalOpen(false);
   };
-
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
   const fetchClientData = async () => {
     try {
       const docRef = doc(db, "Clients", id);
@@ -62,6 +69,38 @@ const Profile = () => {
         theme: "colored",
       });
       console.error("Error updating client data:", error);
+    }
+  };
+  const handleAddCame = async () => {
+    try {
+      // Fetch the client document
+      const clientDocRef = doc(db, "Clients", id);
+      const clientDoc = await getDoc(clientDocRef);
+
+      if (clientDoc.exists()) {
+        const currentDate = getCurrentDate();
+        const lastCame = clientDoc.data().LastCame;
+
+        if (lastCame === currentDate) {
+          toast.error("Client already came today", {
+            theme: "colored",
+          });
+        } else {
+          await updateDoc(clientDocRef, { LastCame: currentDate });
+          toast.success("Client came today", {
+            theme: "colored",
+          });
+
+          fetchClientData();
+        }
+      } else {
+        console.error("Client not found");
+      }
+    } catch (error) {
+      toast.error("Error updating LastCame", {
+        theme: "colored",
+      });
+      console.error("Error updating LastCame:", error);
     }
   };
 
@@ -142,6 +181,9 @@ const Profile = () => {
     return "bg-red";
   };
 
+
+
+
   return (
     <div className="m-[1.5rem] flex justify-center items-center flex-col gap-[1.25rem] text-center relative">
       <div
@@ -162,6 +204,7 @@ const Profile = () => {
               className="w-[4.5rem] h-[4.5rem] rounded-full"
             />
           </div>
+          <Button title="Came today" onClick={handleAddCame}  />
           <div>
             <h1 className="text-[1.5rem]">
               {clientData.Name} {clientData.LastName}

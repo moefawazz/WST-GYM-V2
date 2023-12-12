@@ -37,7 +37,10 @@ const InputsForm = () => {
     }));
   };
 
-
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    return currentDate.toISOString().split('T')[0];
+  };
 
   const handleAddClient = async (e) => {
     if (!formData.Name) {
@@ -60,6 +63,7 @@ const InputsForm = () => {
       try {
         newClient.StartDate = new Date(formData.StartDate);
         newClient.EndDate = new Date(formData.EndDate);
+        newClient.LastCame = getCurrentDate();
         const docRef = await addDoc(collection(db, 'Clients'), newClient);
         console.log('Document written with ID: ', docRef.id);
         toast.success("Client Added successfully" ,{
@@ -80,6 +84,7 @@ const InputsForm = () => {
         Type: 'Select',
         StartDate: defaultFromDate,
         EndDate: defaultToDate,
+        LastCame:'',
       });
     }
   };
