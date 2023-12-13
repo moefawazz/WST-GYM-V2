@@ -16,6 +16,8 @@ const Navbar = () => {
       await signOut(auth); 
     
       setUser(null);
+      showNavbar();
+       scrollToTop()
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -35,7 +37,7 @@ const Navbar = () => {
     <>
       <header className='bg-wblack text-white py-[1rem] px-[1.5rem] flex justify-between fixed items-center w-screen z-40'>
         <div>
-          <h1 className='text-[1.5rem] cursor-pointer'><Link to="/" onClick={() => handleLinkClick('/')}>WST<span className="text-red font-semibold">GYM</span></Link></h1>
+          <h1 className='text-[1.5rem] cursor-pointer'><Link to="/home" onClick={() => handleLinkClick('/')}>WST<span className="text-red font-semibold">GYM</span></Link></h1>
         </div>
         <nav className="flex gap-[3rem]" ref={navRef}>
             <Link to='/Client' className={`hover:bg-red2 rounded-[4rem] px-[1rem] py-[0.5rem] ${activeLink === '/Client' && 'bg-red'}`} onClick={() => {handleLinkClick('/Client'); showNavbar(); scrollToTop()}}>
@@ -46,9 +48,6 @@ const Navbar = () => {
             </Link>
             <Link to='/profits' className={`hover:bg-red2 rounded-[4rem] px-[1rem] py-[0.5rem] ${activeLink === '/profits' && 'bg-red'}`} onClick={() => {handleLinkClick('/profits'); showNavbar(); scrollToTop()}}>
               Profits
-            </Link>
-            <Link to='/QrCode' className={`hover:bg-red2 rounded-[4rem] px-[1rem] py-[0.5rem] ${activeLink === '/QrCode' && 'bg-red'}`} onClick={() => {handleLinkClick('/QrCode'); showNavbar(); scrollToTop()}}>
-              QrScanner
             </Link>
           <button className="nav-btn nav-close-btn" onClick={showNavbar}>
             <Icons.Close className="text-red text-[2.5rem]"/>

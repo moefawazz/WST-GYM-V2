@@ -26,8 +26,6 @@ function App() {
           <Route index element={<Signin />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="/Client" element={<ProtectedRoute><Client /></ProtectedRoute>} />
-          <Route path="/QrCode" element={<ProtectedRoute><Qrcode /></ProtectedRoute>} />
-          <Route path="/QrCode1" element={<ProtectedRoute><Qrcode1 /></ProtectedRoute>} />
           <Route path="/payments" element={<ProtectedRoute><Payments /></ProtectedRoute>} />
           <Route path="/profits" element={<ProtectedRoute><Profits /></ProtectedRoute>} />
           <Route path={`/profile/:id`} element={<ProtectedRoute><Profile /></ProtectedRoute>} />

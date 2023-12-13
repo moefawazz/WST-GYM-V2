@@ -1,12 +1,14 @@
-import React from 'react'
-import HeaderPage from '../../components/headerPage/HeaderPage';
+import React from "react";
+import HeaderPage from "../../components/headerPage/HeaderPage";
 
 const Profits = () => {
   return (
     <>
-    <HeaderPage title="Profits"/>
+      <div className="min-h-screen">
+        <HeaderPage title="Profits" />
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Profits
+export default Profits;
