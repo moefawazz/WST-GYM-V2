@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../input/Input";
 import Button from "../button/Button";
 import TableAddPayment from "../table/TableAddPayment";
+import Icons from '../../assets/icons/Icons';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { db } from '../../firebase';
@@ -9,6 +10,8 @@ import { collection, addDoc } from 'firebase/firestore';
 
 const InputFormPayment = () => {
   const defaultFromDate = new Date().toISOString().split('T')[0]; 
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   const [formData, setFormData] = useState({
     itemName: "",
     amount: "",
@@ -22,6 +25,10 @@ const InputFormPayment = () => {
       ...prevData,
       [fieldName]: value,
     }));
+  };
+
+  const toggleCollapse = () => {
+    setIsCollapsed((prev) => !prev);
   };
 
 
@@ -78,6 +85,13 @@ const InputFormPayment = () => {
   return (
     <div className="container mx-auto mt-4">
       <ToastContainer />
+      <div className='flex justify-end mt-[1.5rem] mr-[1.5rem]'>
+      <Icons.Down
+          className={`transform transition-transform duration-300 ${isCollapsed ? 'rotate-180 text-orange' : ''}`}
+          onClick={toggleCollapse}
+        />
+      </div>
+      <div className={`${isCollapsed ? 'hidden' : ''}`}>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mx-[1.5rem]">
         <div className="flex flex-col">
           <label className='py-2 font-medium'>Item Name :</label>
@@ -126,6 +140,7 @@ const InputFormPayment = () => {
         <Button title="Add Payment" onClick={handleAddPayment} />
       </div>
       <hr></hr>
+      </div>
 
       <div className="my-[2rem]">
         <TableAddPayment />
