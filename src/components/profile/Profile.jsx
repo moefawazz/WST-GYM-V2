@@ -7,7 +7,7 @@ import PopUpUpdate from "../popUp/PopUpUpdate";
 import PopUpDelete from "../popUp/PopUpDelete";
 import PopUpQrCode from "../popUp/QrCodePopUp";
 import { db } from "../../firebase";
-import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc,collection,addDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../button/Button";
 const Profile = () => {
@@ -121,6 +121,23 @@ const Profile = () => {
       console.error("Error deleting client:", error);
     }
   };
+  const addProfitDocument = async (clientId, clientType, startDate) => {
+    console.log("hi")
+    try {
+      const profitCollectionRef = collection(db, "Profits");
+console.log("profits",profitCollectionRef)
+      await addDoc(profitCollectionRef, {
+        clientId,
+        clientType,
+        startDate,
+      
+      });
+
+      console.log("Document added to Profit collection successfully!");
+    } catch (error) {
+      console.error("Error adding document to Profit collection:", error);
+    }
+  };
 
   const handleRenew = async () => {
     try {
@@ -134,6 +151,10 @@ const Profile = () => {
 
         // Update the document in the Firestore collection with the new EndDate
         await updateDoc(clientDocRef, { EndDate: newEndDate });
+
+        await addProfitDocument(id, clientData.Type, clientData.StartDate);
+
+
         toast.success("Subscription renewed successfully", {
           theme: "colored",
         });

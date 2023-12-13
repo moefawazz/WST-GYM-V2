@@ -7,19 +7,19 @@ import TableAddClient from '../table/TableAddClient';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { db } from '../../firebase';
-import { collection,addDoc,getDoc } from '@firebase/firestore';
-
+import { collection, addDoc, getDoc } from '@firebase/firestore';
 
 const InputsForm = () => {
-  const defaultFromDate = new Date().toISOString().split('T')[0]; // Today's date as the default "From" date
-  const defaultToDate = new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('T')[0]; // One month from today as the default "To" date
+  const defaultFromDate = new Date().toISOString().split('T')[0];
+  const defaultToDate = new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('T')[0];
   const [formData, setFormData] = useState({
-   Name: '',
+    Name: '',
     LastName: '',
     PhoneNumber: '',
     Type: 'Select',
     StartDate: defaultFromDate,
     EndDate: defaultToDate,
+    LastCame:'',
   });
 
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -27,8 +27,6 @@ const InputsForm = () => {
   const toggleCollapse = () => {
     setIsCollapsed((prev) => !prev);
   };
-
-  const [clients, setClients] = useState([]);
 
   const handleInputChange = (fieldName, value) => {
     setFormData((prevData) => ({
@@ -41,6 +39,29 @@ const InputsForm = () => {
     const currentDate = new Date();
     return currentDate.toISOString().split('T')[0];
   };
+  const [clients, setClients] = useState([]);
+
+  const profitCollectionRef = collection(db, "Profits");
+console.log(profitCollectionRef)
+
+  const addProfitDocument = async (clientId, clientType, startDate) => {
+    console.log("hi")
+    try {
+      const profitCollectionRef = collection(db, "Profits");
+console.log("profits",profitCollectionRef)
+      await addDoc(profitCollectionRef, {
+        clientId,
+        clientType,
+        startDate,
+      
+      });
+
+      console.log("Document added to Profit collection successfully!");
+    } catch (error) {
+      console.error("Error adding document to Profit collection:", error);
+    }
+  };
+
 
   const handleAddClient = async (e) => {
     if (!formData.Name) {
@@ -57,16 +78,20 @@ const InputsForm = () => {
       });
     } else {
       e.preventDefault();
-  
+
       const newClient = { ...formData };
-  
+
       try {
         newClient.StartDate = new Date(formData.StartDate);
         newClient.EndDate = new Date(formData.EndDate);
         newClient.LastCame = getCurrentDate();
         const docRef = await addDoc(collection(db, 'Clients'), newClient);
         console.log('Document written with ID: ', docRef.id);
-        toast.success("Client Added successfully" ,{
+
+        // Call the function to add a new document to the "Profit" collection
+        await addProfitDocument(docRef.id, newClient.Type, newClient.StartDate);
+
+        toast.success("Client Added successfully", {
           theme: "colored",
         });
       } catch (error) {
@@ -75,7 +100,7 @@ const InputsForm = () => {
           theme: "colored",
         });
       }
-  
+
       setClients((prevClients) => [...prevClients, newClient]);
       setFormData({
         Name: '',
@@ -84,10 +109,12 @@ const InputsForm = () => {
         Type: 'Select',
         StartDate: defaultFromDate,
         EndDate: defaultToDate,
-        LastCame:'',
+        LastCame: '',
       });
     }
   };
+
+
 
   return (
     <div className="container mx-auto mt-4">
