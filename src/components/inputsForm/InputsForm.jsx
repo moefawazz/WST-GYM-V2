@@ -44,7 +44,7 @@ const InputsForm = () => {
   const profitCollectionRef = collection(db, "Profits");
 console.log(profitCollectionRef)
 
-  const addProfitDocument = async (clientId, clientType, startDate) => {
+  const addProfitDocument = async (clientId, clientType, startDate,Name,LastName) => {
     console.log("hi")
     try {
       const profitCollectionRef = collection(db, "Profits");
@@ -53,7 +53,8 @@ console.log("profits",profitCollectionRef)
         clientId,
         clientType,
         startDate,
-      
+      Name,
+      LastName,
       });
 
       console.log("Document added to Profit collection successfully!");
@@ -89,7 +90,7 @@ console.log("profits",profitCollectionRef)
         console.log('Document written with ID: ', docRef.id);
 
         // Call the function to add a new document to the "Profit" collection
-        await addProfitDocument(docRef.id, newClient.Type, newClient.StartDate);
+        await addProfitDocument(docRef.id, newClient.Type, newClient.StartDate,newClient.Name,newClient.LastName);
 
         toast.success("Client Added successfully", {
           theme: "colored",

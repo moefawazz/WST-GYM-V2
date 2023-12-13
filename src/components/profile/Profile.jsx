@@ -121,7 +121,7 @@ const Profile = () => {
       console.error("Error deleting client:", error);
     }
   };
-  const addProfitDocument = async (clientId, clientType, startDate) => {
+  const addProfitDocument = async (clientId, clientType, startDate,Name,LastName) => {
     console.log("hi")
     try {
       const profitCollectionRef = collection(db, "Profits");
@@ -130,7 +130,8 @@ console.log("profits",profitCollectionRef)
         clientId,
         clientType,
         startDate,
-      
+      Name,
+      LastName,
       });
 
       console.log("Document added to Profit collection successfully!");
@@ -152,7 +153,7 @@ console.log("profits",profitCollectionRef)
         // Update the document in the Firestore collection with the new EndDate
         await updateDoc(clientDocRef, { EndDate: newEndDate });
 
-        await addProfitDocument(id, clientData.Type, clientData.StartDate);
+        await addProfitDocument(id, clientData.Type, clientData.StartDate,clientData.Name,clientData.LastName);
 
 
         toast.success("Subscription renewed successfully", {
