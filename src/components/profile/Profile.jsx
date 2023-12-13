@@ -178,7 +178,7 @@ const Profile = () => {
       }
     }
 
-    return "bg-red";
+    return "bg-orange";
   };
 
 
@@ -190,14 +190,14 @@ const Profile = () => {
         onClick={() => {
           navigate("/Client");
         }}
-        className="absolute left-0 top-0 flex items-center text-red cursor-pointer"
+        className="absolute left-0 top-0 flex items-center text-orange cursor-pointer"
       >
         <Icons.Back />
         back
       </div>
       {clientData ? (
         <>
-          <div className="rounded-full w-[5rem] h-[5rem] bg-red flex justify-center items-center">
+          <div className="rounded-full w-[5rem] h-[5rem] bg-orange flex justify-center items-center">
             <img
               src={Image}
               alt="profile"
@@ -209,20 +209,20 @@ const Profile = () => {
             <h1 className="text-[1.5rem]">
               {clientData.Name} {clientData.LastName}
             </h1>
-            <h1 className="text-[1.2rem] text-red font-bold">
+            <h1 className="text-[1.2rem] text-orange font-bold">
               {clientData.Type}
             </h1>
           </div>
           <div>
-            <h1 className="text-red">From</h1>
+            <h1 className="text-orange">From</h1>
             <h2>{clientData.StartDate?.toDate().toLocaleDateString()}</h2>
           </div>
           <div>
-            <h1 className="text-red">To</h1>
+            <h1 className="text-orange">To</h1>
             <h2>{clientData.EndDate?.toDate().toLocaleDateString()}</h2>
           </div>
           <div>
-            <h1 className="text-red">Time Left</h1>
+            <h1 className="text-orange">Time Left</h1>
             <h2>
               <span
                 className={`w-3 h-3 rounded-full inline-block mr-2 ${getCircleColor(
@@ -246,13 +246,13 @@ const Profile = () => {
               <Icons.Edit />
             </div>
             <div
-              className="rounded-[0.25rem] bg-red p-[0.25rem] text-white"
+              className="rounded-[0.25rem] bg-red-600 p-[0.25rem] text-white"
               onClick={() => setIsModalOpen(true)}
             >
               <Icons.Delete />
             </div>
             <div
-              className="rounded-[0.25rem] bg-red p-[0.25rem] text-white"
+              className="rounded-[0.25rem] bg-orange p-[0.25rem] text-white"
               onClick={() => setisQrModalOpen(true)}
             >
               <Icons.QrCode />
@@ -264,7 +264,7 @@ const Profile = () => {
             title="Delete Client"
             text="Are you sure you want to delete?"
             confirmText="Delete"
-            bgColor="bg-red"
+            bgColor="bg-orange"
             onCancel={closeDeleteModal}
             onConfirm={handleDelete}
           />
@@ -280,7 +280,7 @@ const Profile = () => {
           <PopUpQrCode
             isOpen={isQrModalOpen}
             title="QrCode"
-            bgColor="bg-red"
+            bgColor="bg-orange"
             onCancel={closeDeleteModal}
           />
 

@@ -42,7 +42,7 @@ const TableAddPayment = () => {
       <div className="w-full flex justify-end gap-[8px]">
         <input
           type="search"
-          className="w-[50%] border border-red rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] outline-none"
+          className="w-[50%] border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] outline-none"
           placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

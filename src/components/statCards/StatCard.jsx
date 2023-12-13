@@ -61,7 +61,7 @@ const navigate=useNavigate()
   }, []);
 
   return (
-    <div className="px-[1.5rem] py-[2.5rem] flex flex-col gap-[2rem] justify-center items-center flex-wrap">
+    <div className="px-[1.5rem] py-[2.5rem] flex flex-col gap-[2rem] justify-center items-center flex-wrap pt-[5.5rem]">
       <h1 className="text-[1.7rem]">Performance Overview</h1>
       <div className="flex flex-1 gap-[2rem] flex-wrap">
      <Link to={"/Client"} className='w-full'>  <Cards text="Clients"  count={clientsCount} icon={<Icons.Users />} /></Link> 

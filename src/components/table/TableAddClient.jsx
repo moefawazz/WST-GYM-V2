@@ -66,7 +66,7 @@ const TableAddClient = () => {
       }
     }
 
-    return "bg-red";
+    return "bg-orange";
   };
 
   const scrollToTop = () => {
@@ -118,7 +118,7 @@ const TableAddClient = () => {
       <div className="w-full flex justify-end gap-[8px]">
         <div className="w-[50%]">
           <select
-            className="w-full border border-red rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
+            className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
@@ -131,7 +131,7 @@ const TableAddClient = () => {
         </div>
         <input
           type="search"
-          className="w-[50%] border border-red rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] outline-none"
+          className="w-[50%] border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] outline-none"
           placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -197,7 +197,7 @@ const TableAddClient = () => {
           <ul className="pagination flex">
             <li>
               <button
-                className="px-4 py-2 border border-red rounded-full bg-red text-white"
+                className="px-4 py-2 border border-orange rounded-full bg-orange text-white"
                 onClick={goToPreviousPage}
                 disabled={currentPage === 1}
               >
@@ -208,8 +208,8 @@ const TableAddClient = () => {
               <li key={index} className="mx-1">
                 <button
                   className={`${
-                    currentPage === index + 1 ? "bg-red text-white" : "bg-white text-red"
-                  } px-4 py-2 border border-red rounded-full`}
+                    currentPage === index + 1 ? "bg-orange text-white" : "bg-white text-orange"
+                  } px-4 py-2 border border-orange rounded-full`}
                   onClick={() => paginate(index + 1)}
                 >
                   {index + 1}
@@ -218,7 +218,7 @@ const TableAddClient = () => {
             ))}
             <li>
               <button
-                className="px-4 py-2 border border-red rounded-full bg-red text-white"
+                className="px-4 py-2 border border-orange rounded-full bg-orange text-white"
                 onClick={goToNextPage}
                 disabled={currentPage === totalPages}
               >

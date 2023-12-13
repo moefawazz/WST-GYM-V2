@@ -104,7 +104,7 @@ const PopUpUpdate = ({ title, text, confirmText, bgColor, isOpen, onCancel, hand
             <button
               onClick={handleConfirm}
               type="button"
-              className={`inline-flex justify-center w-full rounded-md border bg-red-600 shadow-sm px-4 py-2 text-base font-medium text-white ${bgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm`}
+              className={`inline-flex justify-center w-full rounded-md border bg-orange-600 shadow-sm px-4 py-2 text-base font-medium text-white ${bgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm`}
             >
               {confirmText}
             </button>
