@@ -264,7 +264,7 @@ const Profile = () => {
             title="Delete Client"
             text="Are you sure you want to delete?"
             confirmText="Delete"
-            bgColor="bg-orange"
+            bgColor="bg-red-600"
             onCancel={closeDeleteModal}
             onConfirm={handleDelete}
           />
