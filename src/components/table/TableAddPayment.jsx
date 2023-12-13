@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Icons from "../../assets/icons/Icons";
 import { Waveform } from "@uiball/loaders";
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -37,6 +38,27 @@ const TableAddPayment = () => {
     item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 10;
+
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = filteredPayments.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  const totalPages = Math.ceil(filteredPayments.length / recordsPerPage);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+
   return (
     <div className="mx-[1.5rem]">
       <div className="w-full flex justify-end gap-[8px]">
@@ -61,20 +83,20 @@ const TableAddPayment = () => {
         <tbody>
           {loading ? (
             <tr>
-              <td colSpan="4" className="text-[0.7rem]">
+              <td colSpan="5" className="text-[0.7rem]">
                 <div className="flex justify-center items-center">
-                  <Waveform size={25} color="#990000" />
+                  <Waveform size={25} color="#f99f3d" />
                 </div>
               </td>
             </tr>
-          ) : filteredPayments.length === 0 ? (
+          ) : currentRecords.length === 0 ? (
             <tr>
-              <td colSpan="4" className="text-[0.7rem]">
+              <td colSpan="5" className="text-[0.7rem]">
                 No Records Found
               </td>
             </tr>
           ) : (
-            filteredPayments.map((item, index) => (
+            currentRecords.map((item, index) => (
               <tr key={index} className="text-[0.7rem]">
                 <td>{item.itemName}</td>
                 <td>{item.amount}</td>
@@ -86,6 +108,42 @@ const TableAddPayment = () => {
           )}
         </tbody>
       </table>
+      <div className="flex justify-end mt-4 text-[0.8rem]">
+        <nav>
+          <ul className="pagination flex">
+            <li>
+              <button
+                className="px-2 py-2 border border-orange rounded-full bg-orange text-white"
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+              >
+                <Icons.Left/>
+              </button>
+            </li>
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <li key={index} className="mx-1">
+                <button
+                  className={`${
+                    currentPage === index + 1 ? "bg-orange text-white" : "bg-white text-orange"
+                  } px-2 py-1 border border-orange rounded-full`}
+                  onClick={() => paginate(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+            <li>
+              <button
+                className="px-2 py-2 border border-orange rounded-full bg-orange text-white"
+                onClick={goToNextPage}
+                disabled={currentPage === totalPages}
+              >
+                <Icons.Right/>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 };

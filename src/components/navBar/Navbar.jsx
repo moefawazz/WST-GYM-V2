@@ -85,7 +85,7 @@ const Navbar = () => {
           <button className="nav-btn nav-close-btn" onClick={showNavbar}>
             <Icons.Close className="text-orange text-[2.5rem]" />
           </button>
-          <button onClick={handleSignout}>Signout</button>
+          <button className="text-red-600" onClick={handleSignout}>Sign Out</button>
         </nav>
         <div className="flex gap-1 items-center">
           {/* <Icons.Bell className='text-white w-[2rem] h-[1.25rem] cursor-pointer' /> */}

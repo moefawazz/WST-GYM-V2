@@ -152,7 +152,7 @@ const TableAddClient = () => {
             <tr>
               <td colSpan="4" className="text-[0.7rem]">
                 <div className="flex justify-center items-center">
-                    <Waveform size={25} color="#990000" />
+                    <Waveform size={25} color="#f99f3d" />
                 </div>
               </td>
             </tr>

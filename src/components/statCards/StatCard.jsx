@@ -69,7 +69,7 @@ const navigate=useNavigate()
       </div>
       <div className="flex flex-1 gap-[2rem] flex-wrap">
        <Link to={"/Profits"} className='w-full'><Cards text="Profits" count="300" icon={<Icons.Dollar />} /></Link> 
-        <Cards text="Today Clients" count={todayClientsCount} icon={<Icons.Today />} />
+       <Link to={"/clientsToday"} className='w-full'><Cards text="Today Clients" count={todayClientsCount} icon={<Icons.Today />} /></Link> 
       </div>
     </div>
   );
