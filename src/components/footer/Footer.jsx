@@ -8,7 +8,7 @@ const Footer = () => {
       <img src={Logo} alt={Logo} width="150rem"/>
       </div>
       <div>
-        <h1 className="text-[1rem] cursor-pointer text-white">Zumba <span className="text-orange font-semibold">&</span> Gym</h1>
+        <h1 className="text-[1rem] cursor-pointer text-white">W<span className="text-orange font-semibold">.</span>S<span className="text-orange font-semibold">.</span>T</h1>
       </div>
     </div>
   );

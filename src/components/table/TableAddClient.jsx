@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { Waveform } from "@uiball/loaders";
+import Icons from "../../assets/icons/Icons";
 
 const TableAddClient = () => {
   const navigate = useNavigate();
@@ -192,16 +193,16 @@ const TableAddClient = () => {
           )}
         </tbody>
       </table>
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-end mt-4 text-[0.8rem]">
         <nav>
           <ul className="pagination flex">
             <li>
               <button
-                className="px-4 py-2 border border-orange rounded-full bg-orange text-white"
+                className="px-2 py-2 border border-orange rounded-full bg-orange text-white"
                 onClick={goToPreviousPage}
                 disabled={currentPage === 1}
               >
-                Previous
+                <Icons.Left/>
               </button>
             </li>
             {Array.from({ length: totalPages }).map((_, index) => (
@@ -209,7 +210,7 @@ const TableAddClient = () => {
                 <button
                   className={`${
                     currentPage === index + 1 ? "bg-orange text-white" : "bg-white text-orange"
-                  } px-4 py-2 border border-orange rounded-full`}
+                  } px-2 py-1 border border-orange rounded-full`}
                   onClick={() => paginate(index + 1)}
                 >
                   {index + 1}
@@ -218,11 +219,11 @@ const TableAddClient = () => {
             ))}
             <li>
               <button
-                className="px-4 py-2 border border-orange rounded-full bg-orange text-white"
+                className="px-2 py-2 border border-orange rounded-full bg-orange text-white"
                 onClick={goToNextPage}
                 disabled={currentPage === totalPages}
               >
-                Next
+                <Icons.Right/>
               </button>
             </li>
           </ul>

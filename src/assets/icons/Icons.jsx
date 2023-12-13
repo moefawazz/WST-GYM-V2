@@ -1,4 +1,4 @@
-import { FaBell, FaBars, FaArrowDown, FaArrowUp,FaDumbbell} from "react-icons/fa";
+import { FaBell, FaBars, FaArrowDown, FaArrowUp,FaArrowLeft ,FaArrowRight,FaDumbbell} from "react-icons/fa";
 import { PiUsersThree } from "react-icons/pi";
 import { MdOutlinePayment, MdToday, MdAutorenew, MdModeEdit, MdDelete,MdQrCode } from "react-icons/md";
 import { AiOutlineDollar } from "react-icons/ai";
@@ -20,6 +20,8 @@ const Icons = {
   Delete: MdDelete,
   Up: FaArrowUp,
   Down: FaArrowDown,
+  Left: FaArrowLeft,
+  Right: FaArrowRight,
   Dumble: FaDumbbell,
 
 };
