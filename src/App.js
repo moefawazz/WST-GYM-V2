@@ -25,7 +25,7 @@ function App() {
         <Routes>
           <Route path="/Home" element={<ProtectedRoute><Home/></ProtectedRoute>} />
           <Route index element={<Signin />} />
-          <Route path="/Signup" element={<Signup />} />
+          {/* <Route path="/Signup" element={<Signup />} /> */}
           <Route path="/Client" element={<ProtectedRoute><Client /></ProtectedRoute>} />
           <Route path="/payments" element={<ProtectedRoute><Payments /></ProtectedRoute>} />
           <Route path="/profits" element={<ProtectedRoute><Profits /></ProtectedRoute>} />
