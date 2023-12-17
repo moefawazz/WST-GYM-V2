@@ -178,9 +178,9 @@ const TodayClients = () => {
           </ul>
         </nav>
       </div>
-      <div className='flex justify-center items-center'>
+      {/* <div className='flex justify-center items-center'>
         <button className={`rounded-[3.125rem] bg-red-600 px-[1.5rem] py-[0.43rem] text-white`} onClick={() => setIsModalOpen(true)}>Clear All</button>
-      </div>
+      </div> */}
       <PopUpDelete
             isOpen={isModalOpen}
             title="Clear All"
