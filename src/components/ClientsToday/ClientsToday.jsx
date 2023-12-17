@@ -1,40 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { db } from '../../firebase';
+import { collection, getDocs } from '@firebase/firestore';
 
 const TodayClients = () => {
-  // Array of client objects
-  const clients = [
-    {
-      Name: "John",
-      LastName: "Doe",
-      Type: "gym",
-      PhoneNumber: "123-456-7890",
-    },
-    {
-      Name: "Jane",
-      LastName: "Smith",
-      Type: "gym",
-      PhoneNumber: "987-654-3210",
-    },
-    {
-      Name: "Alice",
-      LastName: "Johnson",
-      Type: "gym",
-      PhoneNumber: "555-123-4567",
-    },
-    {
-      Name: "Bob",
-      LastName: "Williams",
-      Type: "gym",
-      PhoneNumber: "111-222-3333",
-    },
-    // Add more clients if needed
-  ];
+  const [clients, setClients] = useState([]);
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const clientsCollection = collection(db, 'Clients');
+        const querySnapshot = await getDocs(clientsCollection);
+
+        const currentDate = new Date().toISOString().split('T')[0];
+        const filteredClients = querySnapshot.docs
+          .map((doc) => doc.data())
+          .filter((client) => client.LastCame === currentDate);
+
+        setClients(filteredClients);
+      } catch (error) {
+        console.error('Error fetching clients:', error);
+      }
+    };
+
+    fetchClients();
+  }, []);
 
   return (
     <div className="m-[1.5rem]">
-<table className="dash-table">
+      <table className="dash-table">
         <thead>
-          <tr className=" text-[0.7rem]">
+          <tr className="text-[0.7rem]">
             <th className="px-1.5">#</th>
             <th>Clients</th>
             <th>Activity</th>
@@ -42,16 +39,14 @@ const TodayClients = () => {
           </tr>
         </thead>
         <tbody>
-
-            {clients.map((item, index) => (
-              <tr key={index} className="text-[0.7rem]">
-                <td>{index + 1}</td>
-                <td>{item.Name} {item.LastName}</td>
-                <td>{item.Type}</td>
-                <td>{item.PhoneNumber}</td>
-              </tr>
-            ))
-            }
+          {clients.map((item, index) => (
+            <tr key={index} className="text-[0.7rem]">
+              <td>{index + 1}</td>
+              <td>{item.Name} {item.LastName}</td>
+              <td>{item.Type}</td>
+              <td>{item.PhoneNumber}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

@@ -126,8 +126,6 @@ const TableAddClient = () => {
             <option value="All">All</option>
             <option value="Zumba">Zumba</option>
             <option value="Gym">Gym</option>
-            <option value="Treadmill">Treadmill</option>
-            <option value="GymAndTreadmill">Gym+Treadmill</option>
           </select>
         </div>
         <input

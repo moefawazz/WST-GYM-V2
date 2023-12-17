@@ -131,8 +131,6 @@ const TableProfits = () => {
             <option value="All">All</option>
             <option value="Zumba">Zumba</option>
             <option value="Gym">Gym</option>
-            <option value="Treadmill">Treadmill</option>
-            <option value="GymAndTreadmill">Gym+Treadmill</option>
           </select>
         </div>
         <input
@@ -222,10 +220,8 @@ const TableProfits = () => {
       <div className="mt-4">
         <h2 className="text-[1rem] font-semibold">Total Amount by Type</h2>
         <div>
-          <p>Treadmill: {getTotalAmountByType("Treadmill")}</p>
           <p>Gym: {getTotalAmountByType("Gym")}</p>
           <p>Zumba: {getTotalAmountByType("Zumba")}</p>
-          <p>Gym+Treadmill: {getTotalAmountByType("Gym+Treadmill")}</p>
         </div>
       </div>
     </div>

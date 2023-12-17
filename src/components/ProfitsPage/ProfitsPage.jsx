@@ -48,16 +48,9 @@ const ProfitsPage = () => {
 
   return (
     <div className="container mx-auto mt-4">
-      <div >
-      
-       
-
-      
-        </div>
         <div className="my-[2rem]">
           <TableProfits  />
         </div>
-     
     </div>
   );
 };
