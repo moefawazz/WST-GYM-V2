@@ -8,8 +8,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { db } from '../../firebase';
 import { collection, addDoc, getDoc } from '@firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 const InputsForm = () => {
+  const navigate=useNavigate()
   const defaultFromDate = new Date().toISOString().split('T')[0];
   const defaultToDate = new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('T')[0];
   const [formData, setFormData] = useState({
@@ -95,11 +97,14 @@ console.log("profits",profitCollectionRef)
         toast.success("Client Added successfully", {
           theme: "colored",
         });
+  
       } catch (error) {
         console.error('Error adding document: ', error);
         toast.error("Error adding client. Please try again later.", {
           theme: "colored",
-        });
+        }
+        
+        );
       }
 
       setClients((prevClients) => [...prevClients, newClient]);

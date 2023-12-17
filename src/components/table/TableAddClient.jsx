@@ -6,6 +6,7 @@ import { Waveform } from "@uiball/loaders";
 import Icons from "../../assets/icons/Icons";
 
 const TableAddClient = () => {
+  
   const navigate = useNavigate();
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
