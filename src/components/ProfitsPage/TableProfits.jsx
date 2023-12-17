@@ -4,7 +4,6 @@ import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { Waveform } from "@uiball/loaders";
 import Icons from "../../assets/icons/Icons";
-// ... (your imports)
 
 const TableProfits = () => {
   const navigate = useNavigate();
@@ -12,6 +11,8 @@ const TableProfits = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [loading, setLoading] = useState(true);
+  const [selectedMonth, setSelectedMonth] = useState("All");
+  const [selectedYear, setSelectedYear] = useState("All");
 
   useEffect(() => {
     const fetchProfitsData = async () => {
@@ -29,6 +30,22 @@ const TableProfits = () => {
           }
         });
 
+        // Filter data based on the selected month and/or year
+        profitsData = profitsData.filter((item) => {
+          const month = item.startDate?.toDate().getMonth() + 1; // JavaScript months are 0-indexed
+          const year = item.startDate?.toDate().getFullYear();
+
+          if (selectedMonth !== "All" && selectedYear !== "All") {
+            return month === parseInt(selectedMonth) && year === parseInt(selectedYear);
+          } else if (selectedMonth !== "All") {
+            return month === parseInt(selectedMonth);
+          } else if (selectedYear !== "All") {
+            return year === parseInt(selectedYear);
+          }
+
+          return true; // No filter selected
+        });
+
         setProfits(profitsData);
         setLoading(false);
       } catch (error) {
@@ -38,7 +55,7 @@ const TableProfits = () => {
     };
 
     fetchProfitsData();
-  }, []);
+  }, [selectedMonth, selectedYear]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -77,6 +94,12 @@ const TableProfits = () => {
     );
   };
   
+  const calculateOverallTotal = () => {
+    return profits.reduce(
+      (total, item) => total + parseFloat(calculatePayment(item.clientType)),
+      0
+    );
+  };
 
   const filteredProfits = profits.filter((item) => {
     const clientId = item.clientId;
@@ -95,7 +118,7 @@ const TableProfits = () => {
   });
 
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
+  const recordsPerPage = 10;
 
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
@@ -120,8 +143,36 @@ const TableProfits = () => {
 
   return (
     <div className="mx-[1.5rem]">
-      <div className="w-full flex justify-end gap-[8px]">
-        <div className="w-[50%]">
+      <div className="w-full flex justify-end gap-[8px] items-center">
+      <div className="w-[25%]">
+        <select
+          className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+        >
+          <option value="All">All Months</option>
+          {Array.from({ length: 12 }, (_, index) => (
+            <option key={index + 1} value={String(index + 1)}>
+              {new Date(2023, index, 1).toLocaleString('default', { month: 'long' })}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="w-[25%]">
+          <select
+            className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+          >
+            <option value="All">All Years</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            {/* Add more years as needed */}
+          </select>
+        </div>
+        <div className="w-[25%]">
           <select
             className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
             value={selectedCategory}
@@ -134,7 +185,7 @@ const TableProfits = () => {
         </div>
         <input
           type="search"
-          className="w-[50%] border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] outline-none"
+          className="w-[25%] border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] outline-none"
           placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -145,7 +196,7 @@ const TableProfits = () => {
           <tr className="text-[0.7rem]">
             <th>Name</th>
             <th>Type</th>
-            <th>Day of purchase</th>
+            <th>Subscription day</th>
             <th>Amount Paid</th>
           </tr>
         </thead>
@@ -222,6 +273,10 @@ const TableProfits = () => {
           <p>Gym: {getTotalAmountByType("Gym")} $</p>
           <p>Zumba: {getTotalAmountByType("Zumba")} $</p>
         </div>
+      </div>
+      <div className="mt-4">
+        <h2 className="text-[1rem] font-semibold">Overall Total</h2>
+        <p>Total: {calculateOverallTotal()} $</p>
       </div>
     </div>
   );
