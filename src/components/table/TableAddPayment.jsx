@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 import Icons from "../../assets/icons/Icons";
 import { Waveform } from "@uiball/loaders";
 import { db } from "../../firebase";
-import { collection, getDocs,doc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 const TableAddPayment = () => {
   const navigate = useNavigate();
   const [payments, setPayments] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [selectedMonth, setSelectedMonth] = useState("All");
+  const [selectedYear, setSelectedYear] = useState("All");
 
   useEffect(() => {
     const fetchPaymentsData = async () => {
@@ -23,8 +25,7 @@ const TableAddPayment = () => {
             const specificDocument = doc.data();
 
             specificDocument.id = doc.id;
-          paymentData.push(specificDocument);
-            console.log(specificDocument);
+            paymentData.push(specificDocument);
           }
         });
 
@@ -46,9 +47,25 @@ const TableAddPayment = () => {
     });
   };
 
-  const filteredPayments = payments.filter((item) =>
-    item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredPayments = payments.filter((item) => {
+    // Check for selected month and/or year
+    const dateObject = item.date && item.date.toDate && typeof item.date.toDate === 'function' ? item.date.toDate() : null;
+    const month = dateObject ? dateObject.getMonth() + 1 : null; // JavaScript months are 0-indexed
+    const year = dateObject ? dateObject.getFullYear() : null;
+
+    if (selectedMonth !== "All" && selectedYear !== "All") {
+      return month === parseInt(selectedMonth) && year === parseInt(selectedYear);
+    } else if (selectedMonth !== "All") {
+      return month === parseInt(selectedMonth);
+    } else if (selectedYear !== "All") {
+      return year === parseInt(selectedYear);
+    }
+
+    // Check for search term match
+    const searchMatch = item.itemName.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return searchMatch;
+  });
 
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
@@ -74,6 +91,10 @@ const TableAddPayment = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
   };
 
+  const getTotalPayments = () => {
+    return filteredPayments.reduce((total, item) => total + parseFloat(item.totalPrice), 0);
+  };
+
   return (
     <div className="mx-[1.5rem]">
       <div className="w-full flex justify-end gap-[8px]">
@@ -84,6 +105,36 @@ const TableAddPayment = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+      </div>
+      <div className="flex justify-end gap-[8px] items-center mt-4">
+        <div className="w-[25%]">
+          <select
+            className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          >
+            <option value="All">All Months</option>
+            {Array.from({ length: 12 }, (_, index) => (
+              <option key={index + 1} value={String(index + 1)}>
+                {new Date(2023, index, 1).toLocaleString('default', { month: 'long' })}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="w-[25%]">
+          <select
+            className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+          >
+            <option value="All">All Years</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            {/* Add more years as needed */}
+          </select>
+        </div>
       </div>
       <table className="dash-table">
         <thead>
@@ -117,7 +168,7 @@ const TableAddPayment = () => {
                   onClick={() => {
                     navigate(`/paymentEdit/${item.id}`);
                     scrollToTop();
-                    console.log(item.id)
+                    console.log(item.id);
                   }}
                   className="cursor-pointer"
                 >
@@ -169,6 +220,10 @@ const TableAddPayment = () => {
             </li>
           </ul>
         </nav>
+      </div>
+      <div className="mt-4">
+        <h2 className="text-[1rem] font-semibold">Total Payments</h2>
+        <p>Total: {getTotalPayments()} $</p>
       </div>
     </div>
   );
