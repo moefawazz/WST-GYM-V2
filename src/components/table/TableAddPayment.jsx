@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Icons from "../../assets/icons/Icons";
 import { Waveform } from "@uiball/loaders";
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 const TableAddPayment = () => {
+  const navigate = useNavigate();
   const [payments, setPayments] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
@@ -34,6 +36,13 @@ const TableAddPayment = () => {
     fetchPaymentsData();
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const filteredPayments = payments.filter((item) =>
     item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -43,7 +52,10 @@ const TableAddPayment = () => {
 
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = filteredPayments.slice(indexOfFirstRecord, indexOfLastRecord);
+  const currentRecords = filteredPayments.slice(
+    indexOfFirstRecord,
+    indexOfLastRecord
+  );
 
   const totalPages = Math.ceil(filteredPayments.length / recordsPerPage);
 
@@ -98,7 +110,15 @@ const TableAddPayment = () => {
           ) : (
             currentRecords.map((item, index) => (
               <tr key={index} className="text-[0.7rem]">
-                <td>{item.itemName}</td>
+                <td
+                  onClick={() => {
+                    navigate(`/paymentEdit`);
+                    scrollToTop();
+                  }}
+                  className="cursor-pointer"
+                >
+                  {item.itemName}
+                </td>
                 <td>{item.amount}</td>
                 <td>{item.pricePerItem}</td>
                 <td>{item.totalPrice}</td>
@@ -117,14 +137,16 @@ const TableAddPayment = () => {
                 onClick={goToPreviousPage}
                 disabled={currentPage === 1}
               >
-                <Icons.Left/>
+                <Icons.Left />
               </button>
             </li>
             {Array.from({ length: totalPages }).map((_, index) => (
               <li key={index} className="mx-1">
                 <button
                   className={`${
-                    currentPage === index + 1 ? "bg-orange text-white" : "bg-white text-orange"
+                    currentPage === index + 1
+                      ? "bg-orange text-white"
+                      : "bg-white text-orange"
                   } px-2 py-1 border border-orange rounded-full`}
                   onClick={() => paginate(index + 1)}
                 >
@@ -138,7 +160,7 @@ const TableAddPayment = () => {
                 onClick={goToNextPage}
                 disabled={currentPage === totalPages}
               >
-                <Icons.Right/>
+                <Icons.Right />
               </button>
             </li>
           </ul>

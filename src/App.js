@@ -14,6 +14,7 @@ import Signup from "./view/Signup-Signin/Signup";
 import Profile from "./view/Profile/Profile";
 import ClientsToday from "./view/ClientsToday/ClientsToday";
 import Footer from "./components/footer/Footer";
+import PaymentsEdit from "./view/PaymentsEdit/PaymentsEdit";
 import { AuthContextProvider } from "./context/AuthContext";
 import Qrcode1 from "./view/QrCode/Qrcode1";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
@@ -28,6 +29,7 @@ function App() {
           {/* <Route path="/Signup" element={<Signup />} /> */}
           <Route path="/Client" element={<ProtectedRoute><Client /></ProtectedRoute>} />
           <Route path="/payments" element={<ProtectedRoute><Payments /></ProtectedRoute>} />
+          <Route path="/paymentEdit" element={<ProtectedRoute><PaymentsEdit /></ProtectedRoute>} />
           <Route path="/profits" element={<ProtectedRoute><Profits /></ProtectedRoute>} />
           <Route path="/clientsToday" element={<ProtectedRoute><ClientsToday /></ProtectedRoute>} />
           <Route path={`/profile/:id`} element={<ProtectedRoute><Profile /></ProtectedRoute>} />

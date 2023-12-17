@@ -12,8 +12,6 @@ const SelectInput = ({ value, onChange, width }) => {
       </option>
             <option value="Zumba">Zumba</option>
             <option value="Gym">Gym</option>
-            <option value="Treadmill">Treadmill</option>
-            <option value="Gym+Treadmill">Gym+Treadmill</option>
     </select>
   );
 };

@@ -10,6 +10,7 @@ import { db } from "../../firebase";
 import { doc, getDoc, updateDoc, deleteDoc,collection,addDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../button/Button";
+import { Waveform } from "@uiball/loaders";
 const Profile = () => {
   const navigate = useNavigate();
   const [isQrModalOpen, setisQrModalOpen] = useState(false);
@@ -318,7 +319,9 @@ console.log("profits",profitCollectionRef)
           />
         </>
       ) : (
-        <div>Loading...</div>
+        <div className="flex justify-center items-center">
+        <Waveform size={25} color="#f99f3d" />
+    </div>
       )}
     </div>
   );
