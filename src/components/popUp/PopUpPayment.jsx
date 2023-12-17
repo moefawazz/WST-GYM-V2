@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from "react";
 import Input from "../input/Input";
-import SelectInput from "../selectInput/SelectInput";
 import { ToastContainer, toast } from "react-toastify";
 
 const PopUpPayment = ({ title, text, confirmText, bgColor, isOpen, onCancel, handleUpdate, initialData }) => {
-  const { Name = '', LastName = '', PhoneNumber = '', Type = '', StartDate = null, EndDate = null } = initialData || {};
-  
-  const [firstName, setFirstName] = useState(Name);
-  const [lastName, setLastName] = useState(LastName);
-  const [phone, setPhone] = useState(PhoneNumber);
-  const [activity, setActivity] = useState(Type);
-  const [fromDate, setFromDate] = useState(StartDate ? StartDate.toDate().toISOString().split('T')[0] : '');
-  const [toDate, setToDate] = useState(EndDate ? EndDate.toDate().toISOString().split('T')[0] : '');
+  const { itemName = '', amount = '', date = '', pricePerItem = '', totalPrice = '' } = initialData || {};
 
-  const handleFirstNameChange = (e) => setFirstName(e.target.value);
-  const handleLastNameChange = (e) => setLastName(e.target.value);
-  const handlePhoneChange = (e) => setPhone(e.target.value);
-  const handleActivityChange = (value) => setActivity(value);
+  const [item, setItem] = useState(itemName);
+  const [quantity, setQuantity] = useState(amount);
+  const [price, setPrice] = useState(pricePerItem);
+  const [dateValue, setDateValue] = useState(date);
+
+  const handleItemChange = (e) => setItem(e.target.value);
+  const handleQuantityChange = (e) => setQuantity(e.target.value);
+  const handlePriceChange = (e) => setPrice(e.target.value);
+  const handleDateChange = (e) => setDateValue(e.target.value);
 
   useEffect(() => {
-    setFirstName(Name);
-    setLastName(LastName);
-    setPhone(PhoneNumber);
-    setActivity(Type);
-    setFromDate(StartDate ? StartDate.toDate().toISOString().split('T')[0] : '');
-    setToDate(EndDate ? EndDate.toDate().toISOString().split('T')[0] : '');
+    setItem(itemName);
+    setQuantity(amount);
+    setPrice(pricePerItem);
+    setDateValue(date);
   }, [isOpen, initialData]);
 
   if (!isOpen) {
@@ -33,12 +28,11 @@ const PopUpPayment = ({ title, text, confirmText, bgColor, isOpen, onCancel, han
 
   const handleConfirm = () => {
     const updatedData = {
-      Name: firstName,
-      LastName: lastName,
-      PhoneNumber: phone,
-      Type: activity,
-      StartDate: new Date(fromDate),
-      EndDate: new Date(toDate),
+      itemName: item,
+      amount: quantity,
+      date: dateValue,
+      pricePerItem: price,
+      totalPrice: (parseFloat(price) * parseInt(quantity)).toString(),
     };
 
     handleUpdate(updatedData);
@@ -70,22 +64,22 @@ const PopUpPayment = ({ title, text, confirmText, bgColor, isOpen, onCancel, han
           <div>
             <div className='flex flex-col'>
               <label className='py-2 font-medium'>Item Name :</label>
-              <Input type="text" placeholder="Enter Item Name" value={firstName} onChange={handleFirstNameChange} />
+              <Input type="text" placeholder="Enter Item Name" value={item} onChange={handleItemChange} />
             </div>
 
             <div className='flex flex-col'>
               <label className='py-2 font-medium'>Quantity :</label>
-              <Input type="text" placeholder="Enter Quantity" value={lastName} onChange={handleLastNameChange} />
+              <Input type="text" placeholder="Enter Quantity" value={quantity} onChange={handleQuantityChange} />
             </div>
 
             <div className='flex flex-col'>
               <label className='py-2 font-medium'>Price Per Item ($) :</label>
-              <Input type="number" placeholder="Enter Price Per Item" value={phone} onChange={handlePhoneChange} />
+              <Input type="number" placeholder="Enter Price Per Item" value={price} onChange={handlePriceChange} />
             </div>
 
             <div className='flex flex-col'>
               <label className='py-2 font-medium'>Date :</label>
-              <Input type="date" placeholder="Enter Date" width="w-full" value={activity} onChange={handleActivityChange} />
+              <Input type="date" placeholder="Enter Date" width="w-full" value={dateValue} onChange={handleDateChange} />
             </div>
 
           </div>

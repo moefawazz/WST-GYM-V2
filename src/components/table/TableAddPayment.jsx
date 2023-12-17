@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Icons from "../../assets/icons/Icons";
 import { Waveform } from "@uiball/loaders";
 import { db } from "../../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs,doc } from "firebase/firestore";
 
 const TableAddPayment = () => {
   const navigate = useNavigate();
@@ -21,7 +21,10 @@ const TableAddPayment = () => {
         snapshot.forEach((doc) => {
           if (doc.exists()) {
             const specificDocument = doc.data();
-            paymentData.push(specificDocument);
+
+            specificDocument.id = doc.id;
+          paymentData.push(specificDocument);
+            console.log(specificDocument);
           }
         });
 
@@ -112,8 +115,9 @@ const TableAddPayment = () => {
               <tr key={index} className="text-[0.7rem]">
                 <td
                   onClick={() => {
-                    navigate(`/paymentEdit`);
+                    navigate(`/paymentEdit/${item.id}`);
                     scrollToTop();
+                    console.log(item.id)
                   }}
                   className="cursor-pointer"
                 >

@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import PopUpPayment from "../popUp/PopUpPayment";
 import PopUpDelete from "../popUp/PopUpDelete";
 import { db } from "../../firebase";
-import { doc, getDoc, updateDoc, deleteDoc,collection,addDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import { Waveform } from "@uiball/loaders";
 
@@ -14,78 +14,67 @@ const PaymentEdit = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const { id } = useParams();
-  const [clientData, setClientData] = useState(null);
-  const [paymentData, setPaymentData] = useState([
-    {
-      itemName: "Product 1",
-      amount: 2,
-      date: "17/12/2023",
-      pricePerItem: 25.99,
-      totalPrice: 51.98,
-    },
-  ]);
+  const [paymentData, setPaymentData] = useState(null);
+
   const closeDeleteModal = () => {
     setIsModalOpen(false);
     setIsModalUpdateOpen(false);
   };
 
-  const fetchClientData = async () => {
+  const fetchPaymentData = async () => {
     try {
-      const docRef = doc(db, "Clients", id);
+      const docRef = doc(db, "Payments", id);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        const clientData = docSnap.data();
-        setClientData(clientData);
+        const paymentData = docSnap.data();
+        setPaymentData(paymentData);
       } else {
-        console.error("Client not found");
+        console.error("Payment not found");
       }
     } catch (error) {
-      console.error("Error fetching client data:", error);
+      console.error("Error fetching payment data:", error);
     }
   };
 
   useEffect(() => {
     if (id) {
-      fetchClientData();
+      fetchPaymentData();
     }
   }, [id]);
 
   const handleUpdate = async (updatedData) => {
     try {
-      // Update the document in the Firestore collection
-      const clientDocRef = doc(db, "Clients", id);
-      await updateDoc(clientDocRef, updatedData);
-      toast.success("client updated succesfully", {
+      const paymentDocRef = doc(db, "Payments", id);
+      await updateDoc(paymentDocRef, updatedData);
+      toast.success("Payment updated successfully", {
         theme: "colored",
       });
 
       setIsModalUpdateOpen(false);
-      fetchClientData();
+      fetchPaymentData();
     } catch (error) {
-      toast.error("error updating the client", {
+      toast.error("Error updating the payment", {
         theme: "colored",
       });
-      console.error("Error updating client data:", error);
+      console.error("Error updating payment data:", error);
     }
   };
 
-
   const handleDelete = async () => {
     try {
-      console.log("hi");
-      const clientDocRef = doc(db, "Clients", id);
-      await deleteDoc(clientDocRef);
-      toast.success("Client deleted successfully", {
+      const paymentDocRef = doc(db, "Payments", id);
+      await deleteDoc(paymentDocRef);
+      toast.success("Payment deleted successfully", {
         theme: "colored",
       });
 
-      navigate("/client");
+      navigate("/Payments");
     } catch (error) {
-      toast.error("Error deleting the client", {
+      toast.error("Error deleting the payment", {
         theme: "colored",
       });
-      console.error("Error deleting client:", error);
+      console.error("Error deleting payment:", error);
     }
   };
 
@@ -104,23 +93,23 @@ const PaymentEdit = () => {
         <>
           <div>
             <h1 className="text-orange">Item Name</h1>
-            <h2>{paymentData.itemName}product 1</h2>
+            <h2>{paymentData.itemName}</h2>
           </div>
           <div>
             <h1 className="text-orange">Quantity</h1>
-            <h2>{paymentData.amount} 10</h2>
+            <h2>{paymentData.amount}</h2>
           </div>
           <div>
             <h1 className="text-orange">Price Per Item</h1>
-            <h2>{paymentData.pricePerItem} 5</h2>
+            <h2>{paymentData.pricePerItem}</h2>
           </div>
           <div>
             <h1 className="text-orange">Total</h1>
-            <h2>{paymentData.totalPrice} 50</h2>
+            <h2>{paymentData.totalPrice}</h2>
           </div>
           <div>
             <h1 className="text-orange">Date</h1>
-            <h2>{paymentData.date} 12/17/2023</h2>
+            <h2>{paymentData.date}</h2>
           </div>
 
           <div className="flex items-center gap-[1.25rem] mt-[1.25rem]">
@@ -148,7 +137,6 @@ const PaymentEdit = () => {
             onConfirm={handleDelete}
           />
 
-
           <PopUpPayment
             isOpen={isModalUpdateOpen}
             title="Update Payment"
@@ -157,13 +145,13 @@ const PaymentEdit = () => {
             bgColor="bg-green-600"
             onCancel={closeDeleteModal}
             handleUpdate={handleUpdate}
-            initialData={clientData}
+            initialData={paymentData}
           />
         </>
       ) : (
         <div className="flex justify-center items-center">
-        <Waveform size={25} color="#f99f3d" />
-    </div>
+          <Waveform size={25} color="#f99f3d" />
+        </div>
       )}
     </div>
   );
