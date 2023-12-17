@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { db } from '../../firebase';
 import { collection, addDoc, getDoc } from '@firebase/firestore';
+
 import { useNavigate } from 'react-router-dom';
 
 const InputsForm = () => {
@@ -65,7 +66,6 @@ console.log("profits",profitCollectionRef)
     }
   };
 
-
   const handleAddClient = async (e) => {
     if (!formData.Name) {
       toast.error("First Name is mandatory!", {
@@ -81,32 +81,34 @@ console.log("profits",profitCollectionRef)
       });
     } else {
       e.preventDefault();
-
+  
       const newClient = { ...formData };
-
+  
       try {
         newClient.StartDate = new Date(formData.StartDate);
         newClient.EndDate = new Date(formData.EndDate);
         newClient.LastCame = getCurrentDate();
+        
         const docRef = await addDoc(collection(db, 'Clients'), newClient);
         console.log('Document written with ID: ', docRef.id);
-
+  
         // Call the function to add a new document to the "Profit" collection
-        await addProfitDocument(docRef.id, newClient.Type, newClient.StartDate,newClient.Name,newClient.LastName);
-
+        await addProfitDocument(docRef.id, newClient.Type, newClient.StartDate, newClient.Name, newClient.LastName);
+  
         toast.success("Client Added successfully", {
           theme: "colored",
         });
+  
+        // Navigate to the profile page after successfully adding the client
+        navigate(`/profile/${docRef.id}`);
   
       } catch (error) {
         console.error('Error adding document: ', error);
         toast.error("Error adding client. Please try again later.", {
           theme: "colored",
-        }
-        
-        );
+        });
       }
-
+  
       setClients((prevClients) => [...prevClients, newClient]);
       setFormData({
         Name: '',
@@ -119,6 +121,7 @@ console.log("profits",profitCollectionRef)
       });
     }
   };
+  
 
 
 

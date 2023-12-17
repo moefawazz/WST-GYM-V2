@@ -65,11 +65,11 @@ const navigate=useNavigate()
       <h1 className="text-[1.7rem]">Performance Overview</h1>
       <div className="flex flex-1 gap-[2rem] flex-wrap">
      <Link to={"/Client"} className='w-full'>  <Cards text="Clients"  count={clientsCount} icon={<Icons.Users />} /></Link> 
-       <Link to={"/Payments"} className='w-full'><Cards text="Payments" count={totalPayments + ' $'} icon={<Icons.Credit />} /></Link> 
+       <Link to={"/clientsToday"} className='w-full'><Cards text="Today Clients" count={todayClientsCount} icon={<Icons.Today />} /></Link> 
       </div>
       <div className="flex flex-1 gap-[2rem] flex-wrap">
-       <Link to={"/Profits"} className='w-full'><Cards text="Profits" count="300" icon={<Icons.Dollar />} /></Link> 
-       <Link to={"/clientsToday"} className='w-full'><Cards text="Today Clients" count={todayClientsCount} icon={<Icons.Today />} /></Link> 
+       <Link to={"/Profits"} className='w-full'><Cards text="Profits" count="Check your Profits" icon={<Icons.Dollar />} /></Link> 
+       <Link to={"/Payments"} className='w-full'><Cards text="Payments" count="Check your Payments" icon={<Icons.Credit />} /></Link> 
       </div>
     </div>
   );
