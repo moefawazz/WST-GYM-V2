@@ -58,14 +58,12 @@ const TableProfits = () => {
 
   const calculatePayment = (type) => {
     switch (type) {
-      case "Treadmill":
-        return "$10";
+   
       case "Gym":
-        return "$15";
+        return "15";
       case "Zumba":
-        return "$15";
-      case "GymAndTreadmill":
-        return "$20";
+        return "15";
+
       default:
         return "$0";
     }
@@ -74,10 +72,11 @@ const TableProfits = () => {
   const getTotalAmountByType = (type) => {
     const filteredByType = profits.filter((item) => item.clientType === type);
     return filteredByType.reduce(
-      (total, item) => total + calculatePayment(item.clientType),
+      (total, item) => total + parseFloat(calculatePayment(item.clientType)),
       0
     );
   };
+  
 
   const filteredProfits = profits.filter((item) => {
     const clientId = item.clientId;
@@ -173,7 +172,7 @@ const TableProfits = () => {
                 </td>
                 <td>{item.clientType}</td>
                 <td>{formatStartDate(item.startDate)}</td>
-                <td>{calculatePayment(item.clientType)}</td>
+                <td>{calculatePayment(item.clientType)} $</td>
               </tr>
             ))
           )}
@@ -220,8 +219,8 @@ const TableProfits = () => {
       <div className="mt-4">
         <h2 className="text-[1rem] font-semibold">Total Amount by Type</h2>
         <div>
-          <p>Gym: {getTotalAmountByType("Gym")}</p>
-          <p>Zumba: {getTotalAmountByType("Zumba")}</p>
+          <p>Gym: {getTotalAmountByType("Gym")} $</p>
+          <p>Zumba: {getTotalAmountByType("Zumba")} $</p>
         </div>
       </div>
     </div>
