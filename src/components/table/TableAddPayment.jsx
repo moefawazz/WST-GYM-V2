@@ -97,17 +97,16 @@ const TableAddPayment = () => {
 
   return (
     <div className="mx-[1.5rem]">
-      <div className="w-full flex justify-end gap-[8px]">
+      <div className="w-full flex  gap-[8px]">
         <input
           type="search"
-          className="w-[50%] border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] outline-none"
+          className="w-[50%] border border-orange rounded-[0.25rem] mt-4  h-[10%] text-[0.7rem] px-[0.5rem] py-[0.3rem] outline-none"
           placeholder="Search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-      </div>
-      <div className="flex justify-end gap-[8px] items-center mt-4">
-        <div className="w-[25%]">
+      <div className="flex  gap-[8px] items-center mt-4">
+        <div className="w-[50%]">
           <select
             className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
             value={selectedMonth}
@@ -121,7 +120,7 @@ const TableAddPayment = () => {
             ))}
           </select>
         </div>
-        <div className="w-[25%]">
+        <div className="w-[50%]">
           <select
             className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
             value={selectedYear}
@@ -135,6 +134,7 @@ const TableAddPayment = () => {
             {/* Add more years as needed */}
           </select>
         </div>
+      </div>
       </div>
       <table className="dash-table">
         <thead>
