@@ -195,20 +195,32 @@ const TableAddPayment = () => {
                 <Icons.Left />
               </button>
             </li>
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <li key={index} className="mx-1">
-                <button
-                  className={`${
-                    currentPage === index + 1
-                      ? "bg-orange text-white"
-                      : "bg-white text-orange"
-                  } px-2 py-1 border border-orange rounded-full`}
-                  onClick={() => paginate(index + 1)}
-                >
-                  {index + 1}
-                </button>
-              </li>
-            ))}
+            {Array.from({ length: totalPages }).map((_, index) => {
+  const startPage = Math.max(1, currentPage - 1);
+  const endPage = Math.min(totalPages, startPage + 2);
+
+  if (index + 1 >= startPage && index + 1 <= endPage) {
+    return (
+      <li key={index} className="mx-1">
+        <button
+          className={`${
+            currentPage === index + 1
+              ? "bg-orange text-white"
+              : "bg-white text-orange"
+          } px-2 py-1 border border-orange rounded-full`}
+          onClick={() => paginate(index + 1)}
+        >
+          {index + 1}
+        </button>
+      </li>
+    );
+  }
+
+  // Add a condition to render ellipsis (...) when not in the range
+ 
+
+  return null;
+})}
             <li>
               <button
                 className="px-2 py-2 border border-orange rounded-full bg-orange text-white"
