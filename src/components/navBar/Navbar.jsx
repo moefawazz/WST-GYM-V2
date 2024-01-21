@@ -1,13 +1,19 @@
 import React, { useRef, useState, useEffect } from "react";
 import Icons from "../../assets/icons/Icons";
-import PopUp from "../popUp/PopUp";
 import Logo from "../../assets/images/GymLogo.png";
 import { Link } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
+import PopUpUserCheck from "../popUp/PopUpUserCheck";
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState("");
   const navRef = useRef();
   const [user, setUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const handleLinkClick = (link) => {
     setActiveLink(link);
   };
@@ -88,12 +94,18 @@ const Navbar = () => {
           <button className="text-red-600" onClick={handleSignout}>Sign Out</button>
         </nav>
         <div className="flex gap-1 items-center">
-          {/* <Icons.Bell className='text-white w-[2rem] h-[1.25rem] cursor-pointer' /> */}
+          <Icons.UserCheck className='text-orange w-[2rem] h-[1.25rem] cursor-pointer' onClick={() => setIsModalOpen(true)}/>
           <button className="nav-btn" onClick={showNavbar}>
             <Icons.Bars className="text-orange" />
           </button>
         </div>
       </header>
+      <PopUpUserCheck
+            isOpen={isModalOpen}
+            title="Workers Availability"
+            onCancel={closeModal}
+            onConfirm={()=>{}}
+          />
     </>
   );
 };

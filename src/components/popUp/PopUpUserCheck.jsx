@@ -1,7 +1,26 @@
-import React from "react";
-import Input from "../input/Input";
+import React, { useState } from "react";
+import Toggle from "../toggle/toggle";
 
-const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm }) => {
+const PopUpUserCheck = ({
+  title,
+  text,
+  confirmText,
+  bgColor,
+  isOpen,
+  onCancel,
+  onConfirm,
+}) => {
+  const [user1Checked, setUser1Checked] = useState(true);
+  const [user2Checked, setUser2Checked] = useState(true);
+
+  const handleUser1Toggle = () => {
+    setUser1Checked(!user1Checked);
+  };
+
+  const handleUser2Toggle = () => {
+    setUser2Checked(!user2Checked);
+  };
+
   if (!isOpen) {
     return null;
   }
@@ -31,30 +50,29 @@ const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm 
               >
                 {title}
               </h3>
-              <p className="mt-2 text-sm text-gray-500">
-                {text}
-              </p>
+              {text && <p className="mt-2 text-sm text-gray-500">{text}</p>}
             </div>
           </div>
-          <div>
-          <div className='flex flex-col'>
-              <label className='py-2 font-medium'>From :</label>
-              <Input type="date" placeholder="From" width="w-full" value={""} onChange={""} />
+          <div className="flex flex-col gap-3 mt-[2rem] sm:mt-6">
+            <div className="flex justify-between">
+              <h2>User 1</h2>
+              <Toggle checked={user1Checked} onChange={handleUser1Toggle} />
             </div>
-
-            <div className='flex flex-col'>
-              <label className='py-2 font-medium'>To :</label>
-              <Input type="date" placeholder="To" width="w-full" value={""} onChange={""} />
+            <div className="flex justify-between">
+              <h2>User 2</h2>
+              <Toggle checked={user2Checked} onChange={handleUser2Toggle} />
             </div>
           </div>
           <div className="mt-5 sm:mt-6">
-            <button
-              onClick={onConfirm}
-              type="button"
-              className={`inline-flex justify-center w-full rounded-md border bg-orange-600 shadow-sm px-4 py-2 text-base font-medium text-white ${bgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm`}
-            >
-              {confirmText}
-            </button>
+            {confirmText && (
+              <button
+                onClick={onConfirm}
+                type="button"
+                className={`inline-flex justify-center w-full rounded-md border bg-orange-600 shadow-sm px-4 py-2 text-base font-medium text-white ${bgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm`}
+              >
+                {confirmText}
+              </button>
+            )}
             <button
               onClick={onCancel}
               type="button"
@@ -69,4 +87,4 @@ const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm 
   );
 };
 
-export default PopUp;
+export default PopUpUserCheck;
