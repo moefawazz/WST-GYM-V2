@@ -1,7 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../input/Input";
 
+const getCurrentDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm }) => {
+  const calculateEndDate = (startDate, daysToAdd) => {
+    const currentDate = new Date(startDate);
+    currentDate.setDate(currentDate.getDate() + daysToAdd);
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const defaultStartDate = getCurrentDate(); // Get the current date
+  const defaultEndDate = calculateEndDate(defaultStartDate, 30); // Calculate the end date
+
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(defaultEndDate);
+
+  const handleConfirm = () => {
+    // Pass the selected dates to the onConfirm function
+    onConfirm(startDate, endDate);
+  };
+
   if (!isOpen) {
     return null;
   }
@@ -39,17 +66,29 @@ const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm 
           <div>
           <div className='flex flex-col'>
               <label className='py-2 font-medium'>From :</label>
-              <Input type="date" placeholder="From" width="w-full" value={""} onChange={""} />
+              <Input
+                type="date"
+                placeholder="From"
+                width="w-full"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
             </div>
 
             <div className='flex flex-col'>
               <label className='py-2 font-medium'>To :</label>
-              <Input type="date" placeholder="To" width="w-full" value={""} onChange={""} />
+              <Input
+                type="date"
+                placeholder="To"
+                width="w-full"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
             </div>
           </div>
           <div className="mt-5 sm:mt-6">
-            <button
-              onClick={onConfirm}
+             <button
+              onClick={handleConfirm}
               type="button"
               className={`inline-flex justify-center w-full rounded-md border bg-orange-600 shadow-sm px-4 py-2 text-base font-medium text-white ${bgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm`}
             >

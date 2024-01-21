@@ -141,51 +141,31 @@ console.log("profits",profitCollectionRef)
     }
   };
 
-  const handleRenew = async () => {
+  const handleRenew = async (startDate, endDate) => {
     try {
       const clientDocRef = doc(db, "Clients", id);
       const clientDoc = await getDoc(clientDocRef);
-  
+
       if (clientDoc.exists()) {
-        const currentDate = new Date(); // Today's date
-  
-        const currentEndDate = clientDoc.data().EndDate.toDate();
-        const isExpired = currentEndDate < currentDate;
-  
-        let newStartDate = currentDate;
-        let newEndDate = new Date(currentEndDate);
-  
-        if (isExpired) {
-          // If subscription is expired, set StartDate to today
-          newStartDate = currentDate;
-  
-          // Calculate the new EndDate by adding 30 days to today's date
-          newEndDate = new Date(currentDate);
-          newEndDate.setDate(newEndDate.getDate() + 30);
-        } else {
-          // If subscription is not expired, extend the existing EndDate by 30 days
-          newEndDate.setDate(newEndDate.getDate() + 30);
-        }
-  
-        // Update the Firestore document with the new dates
+        // Update the Firestore document with the selected dates
         await updateDoc(clientDocRef, {
-          StartDate: newStartDate,
-          EndDate: newEndDate,
+          StartDate: new Date(startDate),
+          EndDate: new Date(endDate),
         });
-  
+
         // Call addProfitDocument to add the renewed subscription to the Profit collection
         await addProfitDocument(
           id,
           clientData.Type,
-          newStartDate,
+          new Date(startDate),
           clientData.Name,
           clientData.LastName
         );
-  
+
         toast.success("Subscription renewed successfully", {
           theme: "colored",
         });
-  
+
         setIsModalRenewOpen(false);
         fetchClientData();
       } else {
@@ -198,6 +178,7 @@ console.log("profits",profitCollectionRef)
       console.error("Error renewing subscription:", error);
     }
   };
+
   
   
 
@@ -318,15 +299,15 @@ console.log("profits",profitCollectionRef)
             onCancel={closeDeleteModal}
             onConfirm={handleDelete}
           />
-          <PopUp
-            isOpen={isModalRenewOpen}
-            title="Renew Subscription"
-            text="Are you sure you want to renew subscription (+30 Days)?"
-            confirmText="Renew"
-            bgColor="bg-yellow-600"
-            onCancel={closeDeleteModal}
-            onConfirm={handleRenew}
-          />
+      <PopUp
+  isOpen={isModalRenewOpen}
+  title="Renew Subscription"
+  text="Are you sure you want to renew subscription (+30 Days)?"
+  confirmText="Renew"
+  bgColor="bg-yellow-600"
+  onCancel={closeDeleteModal}
+  onConfirm={(startDate, endDate) => handleRenew(startDate, endDate)}
+/>
           <PopUpQrCode
             isOpen={isQrModalOpen}
             title="QrCode"
