@@ -18,6 +18,8 @@ import PaymentsEdit from "./view/PaymentsEdit/PaymentsEdit";
 import { AuthContextProvider } from "./context/AuthContext";
 import Qrcode1 from "./view/QrCode/Qrcode1";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import EmailProtectedRoute from "./components/ProtectedRoute/EmailProtected";
+
 function App() {
   return (
     <BrowserRouter>
@@ -28,9 +30,21 @@ function App() {
           <Route index element={<Signin />} />
           {/* <Route path="/Signup" element={<Signup />} /> */}
           <Route path="/Client" element={<ProtectedRoute><Client /></ProtectedRoute>} />
-          <Route path="/payments" element={<ProtectedRoute><Payments /></ProtectedRoute>} />
-          <Route path="/paymentEdit/:id" element={<ProtectedRoute><PaymentsEdit /></ProtectedRoute>} />
-          <Route path="/profits" element={<ProtectedRoute><Profits /></ProtectedRoute>} />
+          
+          {/* Use ProtectedRoute for /payments and /profits */}
+          <Route
+            path="/payments/*"
+            element={<EmailProtectedRoute><Route index element={<Payments />} /></EmailProtectedRoute>}
+          />
+          <Route
+            path="/paymentEdit/:id"
+            element={<EmailProtectedRoute><Route index element={<PaymentsEdit />} /></EmailProtectedRoute>}
+          />
+          <Route
+            path="/profits/*"
+            element={<EmailProtectedRoute><Route index element={<Profits />} /></EmailProtectedRoute>}
+          />
+          
           <Route path="/clientsToday" element={<ProtectedRoute><ClientsToday /></ProtectedRoute>} />
           <Route path={`/profile/:id`} element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         </Routes>

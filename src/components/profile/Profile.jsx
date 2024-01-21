@@ -141,63 +141,64 @@ console.log("profits",profitCollectionRef)
     }
   };
 
- const handleRenew = async () => {
-  try {
-    const clientDocRef = doc(db, "Clients", id);
-    const clientDoc = await getDoc(clientDocRef);
-
-    if (clientDoc.exists()) {
-      const currentDate = new Date(); // Today's date
-
-      const currentEndDate = clientDoc.data().EndDate.toDate();
-      const isExpired = currentEndDate < currentDate;
-
-      let newStartDate = currentDate;
-      let newEndDate = new Date(currentEndDate);
-
-      if (isExpired) {
-        // If subscription is expired, set StartDate to today
-        newStartDate = currentDate;
-
-        // Calculate the new EndDate by adding 30 days to today's date
-        newEndDate = new Date(currentDate);
-        newEndDate.setDate(newEndDate.getDate() + 30);
+  const handleRenew = async () => {
+    try {
+      const clientDocRef = doc(db, "Clients", id);
+      const clientDoc = await getDoc(clientDocRef);
+  
+      if (clientDoc.exists()) {
+        const currentDate = new Date(); // Today's date
+  
+        const currentEndDate = clientDoc.data().EndDate.toDate();
+        const isExpired = currentEndDate < currentDate;
+  
+        let newStartDate = currentDate;
+        let newEndDate = new Date(currentEndDate);
+  
+        if (isExpired) {
+          // If subscription is expired, set StartDate to today
+          newStartDate = currentDate;
+  
+          // Calculate the new EndDate by adding 30 days to today's date
+          newEndDate = new Date(currentDate);
+          newEndDate.setDate(newEndDate.getDate() + 30);
+        } else {
+          // If subscription is not expired, extend the existing EndDate by 30 days
+          newEndDate.setDate(newEndDate.getDate() + 30);
+        }
+  
+        // Update the Firestore document with the new dates
+        await updateDoc(clientDocRef, {
+          StartDate: newStartDate,
+          EndDate: newEndDate,
+        });
+  
+        // Call addProfitDocument to add the renewed subscription to the Profit collection
+        await addProfitDocument(
+          id,
+          clientData.Type,
+          newStartDate,
+          clientData.Name,
+          clientData.LastName
+        );
+  
+        toast.success("Subscription renewed successfully", {
+          theme: "colored",
+        });
+  
+        setIsModalRenewOpen(false);
+        fetchClientData();
       } else {
-        // If subscription is not expired, extend the existing EndDate by 30 days
-        newEndDate.setDate(newEndDate.getDate() + 30);
+        console.error("Client not found");
       }
-
-      // Update the Firestore document with the new dates
-      await updateDoc(clientDocRef, {
-        StartDate: newStartDate,
-        EndDate: newEndDate,
-      });
-
-      await addProfitDocument(
-        id,
-        clientData.Type,
-        newStartDate,
-        clientData.Name,
-        clientData.LastName
-      );
-
-      toast.success("Subscription renewed successfully", {
+    } catch (error) {
+      toast.error("Error renewing subscription", {
         theme: "colored",
       });
-
-      setIsModalRenewOpen(false);
-      fetchClientData();
-    } else {
-      console.error("Client not found");
+      console.error("Error renewing subscription:", error);
     }
-  } catch (error) {
-    toast.error("Error renewing subscription", {
-      theme: "colored",
-    });
-    console.error("Error renewing subscription:", error);
-  }
-};
-
+  };
+  
   
 
   const calculateTimeLeft = (endDate) => {

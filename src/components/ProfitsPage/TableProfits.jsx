@@ -36,7 +36,10 @@ const TableProfits = () => {
           const year = item.startDate?.toDate().getFullYear();
 
           if (selectedMonth !== "All" && selectedYear !== "All") {
-            return month === parseInt(selectedMonth) && year === parseInt(selectedYear);
+            return (
+              month === parseInt(selectedMonth) &&
+              year === parseInt(selectedYear)
+            );
           } else if (selectedMonth !== "All") {
             return month === parseInt(selectedMonth);
           } else if (selectedYear !== "All") {
@@ -75,7 +78,6 @@ const TableProfits = () => {
 
   const calculatePayment = (type) => {
     switch (type) {
-   
       case "Gym":
         return "15";
       case "Zumba":
@@ -93,7 +95,7 @@ const TableProfits = () => {
       0
     );
   };
-  
+
   const calculateOverallTotal = () => {
     return profits.reduce(
       (total, item) => total + parseFloat(calculatePayment(item.clientType)),
@@ -110,9 +112,8 @@ const TableProfits = () => {
       selectedCategory === "All" || clientType === selectedCategory;
 
     // Check for search term match
-    const searchMatch = clientId || clientType
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    const searchMatch =
+      clientId || clientType.toLowerCase().includes(searchTerm.toLowerCase());
 
     return categoryMatch && searchMatch;
   });
@@ -144,21 +145,23 @@ const TableProfits = () => {
   return (
     <div className="mx-[1.5rem]">
       <div className="w-full flex justify-end gap-[8px] items-center">
-      <div className="w-[25%]">
-        <select
-          className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
-          value={selectedMonth}
-          onChange={(e) => setSelectedMonth(e.target.value)}
-        >
-          <option value="All">All Months</option>
-          {Array.from({ length: 12 }, (_, index) => (
-            <option key={index + 1} value={String(index + 1)}>
-              {new Date(2023, index, 1).toLocaleString('default', { month: 'long' })}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="w-[25%]">
+        <div className="w-[25%]">
+          <select
+            className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          >
+            <option value="All">All Months</option>
+            {Array.from({ length: 12 }, (_, index) => (
+              <option key={index + 1} value={String(index + 1)}>
+                {new Date(2023, index, 1).toLocaleString("default", {
+                  month: "long",
+                })}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="w-[25%]">
           <select
             className="w-full border border-orange rounded-[0.25rem] text-[0.7rem] px-[0.5rem] py-[0.3rem] bg-white outline-none"
             value={selectedYear}
@@ -241,20 +244,31 @@ const TableProfits = () => {
                 <Icons.Left />
               </button>
             </li>
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <li key={index} className="mx-1">
-                <button
-                  className={`${
-                    currentPage === index + 1
-                      ? "bg-orange text-white"
-                      : "bg-white text-orange"
-                  } px-2 py-1 border border-orange rounded-full`}
-                  onClick={() => paginate(index + 1)}
-                >
-                  {index + 1}
-                </button>
-              </li>
-            ))}
+            {Array.from({ length: totalPages }).map((_, index) => {
+              const startPage = Math.max(1, currentPage - 1);
+              const endPage = Math.min(totalPages, startPage + 2);
+
+              if (index + 1 >= startPage && index + 1 <= endPage) {
+                return (
+                  <li key={index} className="mx-1">
+                    <button
+                      className={`${
+                        currentPage === index + 1
+                          ? "bg-orange text-white"
+                          : "bg-white text-orange"
+                      } px-2 py-1 border border-orange rounded-full`}
+                      onClick={() => paginate(index + 1)}
+                    >
+                      {index + 1}
+                    </button>
+                  </li>
+                );
+              }
+
+              // Add a condition to render ellipsis (...) when not in the range
+
+              return null;
+            })}
             <li>
               <button
                 className="px-2 py-2 border border-orange rounded-full bg-orange text-white"
