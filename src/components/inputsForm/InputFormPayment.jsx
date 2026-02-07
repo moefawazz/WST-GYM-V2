@@ -18,6 +18,8 @@ const InputFormPayment = () => {
     date: defaultFromDate,
     pricePerItem: "",
     totalPrice: "",
+    comment: "",
+    
   });
 
   const handleInputChange = (fieldName, value) => {
