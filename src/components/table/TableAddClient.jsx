@@ -141,7 +141,7 @@ const TableAddClient = () => {
         <thead>
           <tr className=" text-[0.7rem]">
             <th>Clients</th>
-            <th>Activity</th>
+            
             <th>Phone Number</th>
             <th>Time left</th>
           </tr>
@@ -173,7 +173,7 @@ const TableAddClient = () => {
                 >
                   {item.Name} {item.LastName}
                 </td>
-                <td>{item.Type}</td>
+                
                 <td>{item.PhoneNumber}</td>
                 <td>
                   <div className="flex items-center">
