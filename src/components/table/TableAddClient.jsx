@@ -41,19 +41,22 @@ const TableAddClient = () => {
     fetchClientData();
   }, []);
 
-  const calculateTimeLeft = (endDate) => {
-    if (endDate) {
-      const oneDay = 24 * 60 * 60 * 1000;
-      const currentDate = new Date();
-      const endDateObj = endDate.toDate();
-      const timeDifference = endDateObj - currentDate;
-      const daysDifference = Math.floor(timeDifference / oneDay);
+const calculateTimeLeft = (endDate) => {
+  if (!endDate) return "N/A";
 
-      return daysDifference >= 0 ? `${daysDifference} days` : "Expired";
-    }
+  const oneDay = 24 * 60 * 60 * 1000;
+  const today = new Date();
+  const end = endDate.toDate();
 
-    return "N/A";
-  };
+  const diffDays = Math.floor((end - today) / oneDay);
+
+  if (diffDays >= 0) {
+    return `${diffDays} days`;
+  }
+
+  return `Expired since ${end.toLocaleDateString()}`;
+};
+
 
   const getCircleColor = (timeLeft) => {
     if (typeof timeLeft === "string") {
