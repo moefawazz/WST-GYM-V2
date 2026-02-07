@@ -19,10 +19,10 @@ const InputsForm = () => {
     Name: '',
     LastName: '',
     PhoneNumber: '',
-    Type: 'Select',
     StartDate: defaultFromDate,
     EndDate: defaultToDate,
     LastCame:'',
+    Payment:'',
   });
 
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -47,14 +47,13 @@ const InputsForm = () => {
   const profitCollectionRef = collection(db, "Profits");
 console.log(profitCollectionRef)
 
-  const addProfitDocument = async (clientId, clientType, startDate,Name,LastName) => {
+  const addProfitDocument = async (clientId, startDate,Name,LastName) => {
     console.log("hi")
     try {
       const profitCollectionRef = collection(db, "Profits");
 console.log("profits",profitCollectionRef)
       await addDoc(profitCollectionRef, {
         clientId,
-        clientType,
         startDate,
       Name,
       LastName,
@@ -75,11 +74,7 @@ console.log("profits",profitCollectionRef)
       toast.error("Last Name is mandatory!", {
         theme: "colored",
       });
-    } else if (formData.Type === "Select") {
-      toast.error("Please select an activity!", {
-        theme: "colored",
-      });
-    } else {
+    }  else {
       e.preventDefault();
   
       const newClient = { ...formData };
@@ -93,7 +88,7 @@ console.log("profits",profitCollectionRef)
         console.log('Document written with ID: ', docRef.id);
   
         // Call the function to add a new document to the "Profit" collection
-        await addProfitDocument(docRef.id, newClient.Type, newClient.StartDate, newClient.Name, newClient.LastName);
+        await addProfitDocument(docRef.id, newClient.StartDate, newClient.Name, newClient.LastName,newClient.Payment);
   
         toast.success("Client Added successfully", {
           theme: "colored",
@@ -114,7 +109,6 @@ console.log("profits",profitCollectionRef)
         Name: '',
         LastName: '',
         PhoneNumber: '',
-        Type: 'Select',
         StartDate: defaultFromDate,
         EndDate: defaultToDate,
         LastCame: '',
@@ -150,11 +144,12 @@ console.log("profits",profitCollectionRef)
           <label className='py-2 font-medium'>Phone Number :</label>
           <Input type="number" placeholder="Enter Phone Number" onChange={(e) => handleInputChange('PhoneNumber', e.target.value)} value={formData.PhoneNumber}/>
         </div>
-        
+
         <div className='flex flex-col'>
-          <label className='py-2 font-medium'>Select Activity :</label>
-          <SelectInput onChange={(value) => handleInputChange('Type', value)} value={formData.Type}/>
+          <label className='py-2 font-medium'>Payment in $:</label>
+          <Input type="number" placeholder="Enter Payment" onChange={(e) => handleInputChange('Payment', e.target.value)} value={formData.Payment}/>
         </div>
+        
         
         <div className='flex flex-col'>
           <label className='py-2 font-medium'>From :</label>
