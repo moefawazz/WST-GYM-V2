@@ -47,7 +47,7 @@ const InputsForm = () => {
   const profitCollectionRef = collection(db, "Profits");
 console.log(profitCollectionRef)
 
-  const addProfitDocument = async (clientId, startDate,Name,LastName) => {
+  const addProfitDocument = async (clientId, startDate,Name,LastName,Payment) => {
     console.log("hi")
     try {
       const profitCollectionRef = collection(db, "Profits");
@@ -57,6 +57,7 @@ console.log("profits",profitCollectionRef)
         startDate,
       Name,
       LastName,
+      Payment,
       });
 
       console.log("Document added to Profit collection successfully!");
@@ -74,7 +75,12 @@ console.log("profits",profitCollectionRef)
       toast.error("Last Name is mandatory!", {
         theme: "colored",
       });
-    }  else {
+    }  else if (!formData.Payment) {
+      toast.error("Payment is mandatory!", {
+        theme: "colored",
+      });
+    }
+      else {
       e.preventDefault();
   
       const newClient = { ...formData };
@@ -112,6 +118,7 @@ console.log("profits",profitCollectionRef)
         StartDate: defaultFromDate,
         EndDate: defaultToDate,
         LastCame: '',
+        Payment:'',
         Comment: '',
       });
     }
