@@ -89,10 +89,7 @@ const PopUpUpdate = ({ title, text, confirmText, bgColor, isOpen, onCancel, hand
               <Input type="number" placeholder="Enter Phone Number" value={phone} onChange={handlePhoneChange} />
             </div>
 
-            <div className='flex flex-col'>
-              <label className='py-2 font-medium'>Select Activity :</label>
-              <SelectInput value={activity} onChange={handleActivityChange} />
-            </div>
+           
 
             <div className='flex flex-col'>
               <label className='py-2 font-medium'>From :</label>
