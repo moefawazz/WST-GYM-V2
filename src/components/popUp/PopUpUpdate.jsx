@@ -12,6 +12,7 @@ const PopUpUpdate = ({ title, text, confirmText, bgColor, isOpen, onCancel, hand
   const [activity, setActivity] = useState(Type);
   const [fromDate, setFromDate] = useState(StartDate ? StartDate.toDate().toISOString().split('T')[0] : '');
   const [toDate, setToDate] = useState(EndDate ? EndDate.toDate().toISOString().split('T')[0] : '');
+  const [comment, setComment] = useState(initialData?.Comment || '');
 
   const handleFirstNameChange = (e) => setFirstName(e.target.value);
   const handleLastNameChange = (e) => setLastName(e.target.value);
@@ -27,6 +28,7 @@ const PopUpUpdate = ({ title, text, confirmText, bgColor, isOpen, onCancel, hand
     setActivity(Type);
     setFromDate(StartDate ? StartDate.toDate().toISOString().split('T')[0] : '');
     setToDate(EndDate ? EndDate.toDate().toISOString().split('T')[0] : '');
+  setComment(initialData?.Comment || '');
   }, [isOpen, initialData]);
 
   if (!isOpen) {
@@ -41,6 +43,8 @@ const PopUpUpdate = ({ title, text, confirmText, bgColor, isOpen, onCancel, hand
       Type: activity,
       StartDate: new Date(fromDate),
       EndDate: new Date(toDate),
+      Comment: comment,
+
     };
 
     handleUpdate(updatedData);
@@ -99,6 +103,17 @@ const PopUpUpdate = ({ title, text, confirmText, bgColor, isOpen, onCancel, hand
               <label className='py-2 font-medium'>To :</label>
               <Input type="date" placeholder="To" width="w-full" value={toDate} onChange={handleToDateChange} />
             </div>
+            <div className="flex flex-col">
+  <label className="py-2 font-medium">Comment :</label>
+  <Input
+    type="text"
+    placeholder="Add a comment"
+    value={comment}
+    onChange={(e) => setComment(e.target.value)}
+    width="w-full"
+  />
+</div>
+
           </div>
           <div className="mt-5 sm:mt-6">
             <button
