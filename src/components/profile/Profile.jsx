@@ -252,6 +252,13 @@ console.log("profits",profitCollectionRef)
             <h1 className="text-orange">To</h1>
             <h2>{clientData.EndDate?.toDate().toLocaleDateString()}</h2>
           </div>
+          {clientData.Comment && (
+  <div>
+    <h1 className="text-orange">Comment</h1>
+    <p className="text-gray-700">{clientData.Comment}</p>
+  </div>
+)}
+
           <div>
             <h1 className="text-orange">Time Left</h1>
             <h2>
