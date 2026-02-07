@@ -4,68 +4,70 @@ import Input from "../input/Input";
 const getCurrentDate = () => {
   const today = new Date();
   const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
-const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm }) => {
+
+const PopUp = ({
+  title,
+  text,
+  confirmText,
+  bgColor,
+  isOpen,
+  onCancel,
+  onConfirm,
+}) => {
   const calculateEndDate = (startDate, daysToAdd) => {
     const currentDate = new Date(startDate);
     currentDate.setDate(currentDate.getDate() + daysToAdd);
     const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const day = String(currentDate.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
 
-  const defaultStartDate = getCurrentDate(); // Get the current date
-  const defaultEndDate = calculateEndDate(defaultStartDate, 30); // Calculate the end date
+  const defaultStartDate = getCurrentDate();
+  const defaultEndDate = calculateEndDate(defaultStartDate, 30);
 
   const [startDate, setStartDate] = useState(defaultStartDate);
   const [endDate, setEndDate] = useState(defaultEndDate);
 
+  const [payment, setPayment] = useState("");
+
   const handleConfirm = () => {
-    // Pass the selected dates to the onConfirm function
-    onConfirm(startDate, endDate);
+    onConfirm(startDate, endDate, payment);
   };
 
-  if (!isOpen) {
-    return null;
-  }
+  if (!isOpen) return null;
+
   return (
     <div className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen pt-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
-        <span
-          className="hidden sm:inline-block sm:align-middle sm:h-screen"
-          aria-hidden="true"
-        >
+
+        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
           &#8203;
         </span>
+
         <div
           className="inline-block align-bottom bg-white rounded-[1rem] px-4 pt-5 pb-5 mx-[1.5rem] w-full text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          <div>
-            <div className="mt-3 text-center sm:mt-5">
-              <h3
-                className="text-lg leading-6 font-medium text-gray-900"
-                id="modal-headline"
-              >
-                {title}
-              </h3>
-              <p className="mt-2 text-sm text-gray-500">
-                {text}
-              </p>
-            </div>
+          <div className="mt-3 text-center sm:mt-5">
+            <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+              {title}
+            </h3>
+            <p className="mt-2 text-sm text-gray-500">{text}</p>
           </div>
-          <div>
-          <div className='flex flex-col'>
-              <label className='py-2 font-medium'>From :</label>
+
+          <div className="mt-4">
+            <div className="flex flex-col">
+              <label className="py-2 font-medium">From :</label>
               <Input
                 type="date"
                 placeholder="From"
@@ -75,8 +77,8 @@ const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm 
               />
             </div>
 
-            <div className='flex flex-col'>
-              <label className='py-2 font-medium'>To :</label>
+            <div className="flex flex-col">
+              <label className="py-2 font-medium">To :</label>
               <Input
                 type="date"
                 placeholder="To"
@@ -85,15 +87,29 @@ const PopUp = ({ title, text, confirmText, bgColor, isOpen, onCancel, onConfirm 
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
+
+            {/* ✅ NEW Payment field */}
+            <div className="flex flex-col">
+              <label className="py-2 font-medium">Payment :</label>
+              <Input
+                type="number"
+                placeholder="Payment"
+                width="w-full"
+                value={payment}
+                onChange={(e) => setPayment(e.target.value)}
+              />
+            </div>
           </div>
+
           <div className="mt-5 sm:mt-6">
-             <button
+            <button
               onClick={handleConfirm}
               type="button"
               className={`inline-flex justify-center w-full rounded-md border bg-orange-600 shadow-sm px-4 py-2 text-base font-medium text-white ${bgColor} focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm`}
             >
               {confirmText}
             </button>
+
             <button
               onClick={onCancel}
               type="button"

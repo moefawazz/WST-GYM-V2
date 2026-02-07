@@ -122,62 +122,65 @@ const Profile = () => {
       console.error("Error deleting client:", error);
     }
   };
-  const addProfitDocument = async (clientId, clientType, startDate,Name,LastName) => {
-    console.log("hi")
-    try {
-      const profitCollectionRef = collection(db, "Profits");
-console.log("profits",profitCollectionRef)
-      await addDoc(profitCollectionRef, {
-        clientId,
-        clientType,
-        startDate,
-      Name,
-      LastName,
-      });
+const addProfitDocument = async (clientId, clientType, startDate, Name, LastName, Payment) => {
+  try {
+    const profitCollectionRef = collection(db, "Profits");
 
-      console.log("Document added to Profit collection successfully!");
-    } catch (error) {
-      console.error("Error adding document to Profit collection:", error);
+    const payload = {
+      clientId: clientId ?? "",
+      clientType: clientType ?? "",   // ✅ fix
+      startDate: startDate ?? new Date(),
+      Name: Name ?? "",
+      LastName: LastName ?? "",
+      Payment: Number(Payment) || 0,
+    };
+
+    await addDoc(profitCollectionRef, payload);
+    console.log("Document added to Profit collection successfully!");
+  } catch (error) {
+    console.error("Error adding document to Profit collection:", error);
+  }
+};
+
+
+
+const handleRenew = async (startDate, endDate, payment) => {
+  try {
+    const clientDocRef = doc(db, "Clients", id);
+    const clientDoc = await getDoc(clientDocRef);
+
+    if (!clientDoc.exists()) {
+      console.error("Client not found");
+      return;
     }
-  };
 
-  const handleRenew = async (startDate, endDate) => {
-    try {
-      const clientDocRef = doc(db, "Clients", id);
-      const clientDoc = await getDoc(clientDocRef);
+    const data = clientDoc.data();
 
-      if (clientDoc.exists()) {
-        // Update the Firestore document with the selected dates
-        await updateDoc(clientDocRef, {
-          StartDate: new Date(startDate),
-          EndDate: new Date(endDate),
-        });
+    await updateDoc(clientDocRef, {
+      StartDate: new Date(startDate),
+      EndDate: new Date(endDate),
+    });
 
-        // Call addProfitDocument to add the renewed subscription to the Profit collection
-        await addProfitDocument(
-          id,
-          clientData.Type,
-          new Date(startDate),
-          clientData.Name,
-          clientData.LastName
-        );
+    await addProfitDocument(
+      id,
+      data.Type || "",
+      new Date(startDate),
+      data.Name || "",
+      data.LastName || "",
+      payment
+    );
 
-        toast.success("Subscription renewed successfully", {
-          theme: "colored",
-        });
+    toast.success("Subscription renewed successfully", { theme: "colored" });
+    setIsModalRenewOpen(false);
+    fetchClientData();
+  } catch (error) {
+    toast.error("Error renewing subscription", { theme: "colored" });
+    console.error("Error renewing subscription:", error);
+  }
+};
 
-        setIsModalRenewOpen(false);
-        fetchClientData();
-      } else {
-        console.error("Client not found");
-      }
-    } catch (error) {
-      toast.error("Error renewing subscription", {
-        theme: "colored",
-      });
-      console.error("Error renewing subscription:", error);
-    }
-  };
+
+
 
   
   
@@ -313,7 +316,9 @@ console.log("profits",profitCollectionRef)
   confirmText="Renew"
   bgColor="bg-yellow-600"
   onCancel={closeDeleteModal}
-  onConfirm={(startDate, endDate) => handleRenew(startDate, endDate)}
+   onConfirm={(startDate, endDate, payment) =>
+    handleRenew(startDate, endDate, payment)
+  }
 />
           <PopUpQrCode
             isOpen={isQrModalOpen}
