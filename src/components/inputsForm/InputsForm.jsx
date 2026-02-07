@@ -118,6 +118,7 @@ console.log("profits",profitCollectionRef)
         StartDate: defaultFromDate,
         EndDate: defaultToDate,
         LastCame: '',
+        Comment: '',
       });
     }
   };
@@ -165,6 +166,16 @@ console.log("profits",profitCollectionRef)
           <label className='py-2 font-medium'>To :</label>
           <Input type="date" placeholder="To" value={formData.EndDate} onChange={(e) => handleInputChange('EndDate', e.target.value)} width="w-full"/>
         </div>
+<div className="flex flex-col width-30">
+  <label className="py-2 font-medium">Comment :</label>
+  <Input
+    type="text"
+    placeholder="Add a comment "
+    onChange={(e) => handleInputChange('Comment', e.target.value)}
+    value={formData.Comment}
+    width="w-full"
+  />
+</div>
 
       </div>
       <div className='flex justify-center items-center my-[2rem]'>
